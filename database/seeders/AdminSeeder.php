@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,8 @@ class AdminSeeder extends Seeder
         User::create([
             'full_name' => 'Admin Admin',
             'email' => 'Admin@gmail.com',
-            'password' => Hash::make('Admin333222'),
+            'password' => Hash::make('Admin@333222'),
+            'email_verified_at' => Carbon::now(),
             'role' => 'admin'
         ]);
     }

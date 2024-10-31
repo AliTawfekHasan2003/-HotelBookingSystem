@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
-class SetLocaleMiddleWare
+class SetLocaleMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,14 @@ class SetLocaleMiddleWare
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $local = $request->header('Accept-Language', 'ar');
-        App::setlocale($local);
+        $supportedLocales = ['en', 'ar'];
+        $locale = $request->header('Accept-Language', 'en');
+
+        if (!in_array($locale, $supportedLocales)) {
+            $locale = 'en';
+        }
+
+        App::setlocale($locale);
 
         return $next($request);
     }

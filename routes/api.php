@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('register', 'register');
-    Route::post('login', 'login');
-    Route::post('logout', 'logout')->middleware('auth');
-    Route::post('refresh', 'refresh')->middleware('auth');
+Route::middleware('lang')->group(function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('register', 'register');
+        Route::get('email/verify/{id}', 'verifyEmail')->name('verification.verify');
+        Route::post('email/verify/resend', 'resendVerification');
+        Route::post('login', 'login');
+        Route::post('logout', 'logout')->middleware('auth');
+        Route::post('refresh', 'refresh')->middleware('auth');
+    });
 });

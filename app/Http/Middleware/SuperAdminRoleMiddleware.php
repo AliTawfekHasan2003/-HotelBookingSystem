@@ -5,12 +5,12 @@ namespace App\Http\Middleware;
 use App\Traits\ResponseTrait;
 use Closure;
 use Illuminate\Http\Request;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
 
 class SuperAdminRoleMiddleware
 {
     use ResponseTrait;
+
     /**
      * Handle an incoming request.
      *
@@ -18,10 +18,10 @@ class SuperAdminRoleMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->attributes->get('user');
 
         if ($user->role != 'super_admin') {
-            return $this->returnError("You do not have the required super admin role.", 403);
+            return $this->returnError(__('roles.super_admin_role'), 403);
         }
 
         return $next($request);

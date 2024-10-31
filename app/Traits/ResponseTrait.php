@@ -24,7 +24,7 @@ trait ResponseTrait
         ], $code);
     }
 
-    public function returnData($status, $msg = '', $dataKey, $dataValue, $code = 200)
+    public function returnData($status = true, $msg = '', $dataKey, $dataValue, $code = 200)
     {
         return response()->json([
             'status' => $status,
@@ -34,7 +34,7 @@ trait ResponseTrait
         ], $code);
     }
 
-    public function returnPaginationData($status, $msg = '', $dataKey, $dataValue, $code = 200)
+    public function returnPaginationData($status = true, $msg = '', $dataKey, $dataValue, $code = 200)
     {
         return response()->json([
             'status' => $status,
@@ -45,7 +45,7 @@ trait ResponseTrait
         ], $code);
     }
 
-    public function returnRegisterLoginRefreshSuccess($msg = '', $dataKey, $dataValue, $token, $code = 200)
+    public function returnLoginRefreshSuccess($msg = '', $dataKey, $dataValue, $token, $code = 200)
     {
         return response()->json([
             'status' => true,

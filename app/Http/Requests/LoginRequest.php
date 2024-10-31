@@ -28,7 +28,21 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email|exists:users,email',
-            'password' => 'required|string',
+            'password' => 'required|string|min:8|max:20',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => __('validation.required'),
+            'email.string' => __('validation.string'),
+            'email.email' => __('validation.email'),
+            'email.exists' => __('validation.exists.email'),
+            'password.required' => __('validation.required'),
+            'password.string' => __('validation.string'),
+            'password.min' => __('validation.min.password', ['min' => 8]),
+            'password.max' => __('validation.max.password', ['max' => 20]),
         ];
     }
 

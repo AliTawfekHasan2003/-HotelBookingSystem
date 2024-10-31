@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CustomAuthJwtMiddleWare
 {
     use ResponseTrait;
+
     /**
      * Handle an incoming request.
      *
@@ -22,16 +23,17 @@ class CustomAuthJwtMiddleWare
     public function handle(Request $request, Closure $next): Response
     {
         try {
-            JWTAuth::parseToken()->authenticate();
+            $user = JWTAuth::parseToken()->authenticate();
         } catch (TokenExpiredException $e) {
-            return $this->returnError("Token is expired.", 401);
+            return $this->returnError(__('auth.error.token_expired'), 401);
         } catch (TokenInvalidException $e) {
-            return $this->returnError("Token is invalid.", 401);
+            return $this->returnError(__('auth.error.token_invalid'), 401);
         } catch (JWTException $e) {
-            return $this->returnError("Token is not provided.", 401);
+            return $this->returnError(__('auth.error.token_not_provided'), 401);
         } catch (\Throwable $e) {
-            return $this->returnError('An unexpected error occurred. Please try again later.', 500);
+            return $this->returnError(__('auth.error.unexpected_error'), 500);
         }
+        $request->attributes->set('user', $user);
 
         return $next($request);
     }
