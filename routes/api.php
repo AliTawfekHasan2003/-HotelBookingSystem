@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AuthSocialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,5 +23,12 @@ Route::middleware('lang')->group(function () {
         Route::post('login', 'login');
         Route::post('logout', 'logout')->middleware('auth');
         Route::post('refresh', 'refresh')->middleware('auth');
+    });
+
+    Route::controller(AuthSocialController::class)->group(function () {
+        Route::get('auth/google', 'redirectToGoogle');
+        Route::get('auth/google/callback', 'googleCallback');
+        Route::get('auth/github', 'redirectToGithub');
+        Route::get('auth/github/callback', 'githubCallback');
     });
 });

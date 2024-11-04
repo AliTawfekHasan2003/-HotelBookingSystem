@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use App\Models\SocialAccount;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable implements JWTSubject
         'full_name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
@@ -68,5 +70,9 @@ class User extends Authenticatable implements JWTSubject
         $name = explode(" ", $this->full_name);
 
         return $name[1] ?? '';
+    }
+
+    public function socialAccounts(){
+        return $this->hasMany(SocialAccount::class);
     }
 }
