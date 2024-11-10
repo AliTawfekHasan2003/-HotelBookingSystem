@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RegisterRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     use ResponseTrait, UserValidationTrait;
 
@@ -28,38 +28,28 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => $this->nameRule(true),
-            'last_name' => $this->nameRule(true),
-            'email' => $this->emailRule(true, true, true),
-            'password' => $this->passwordRule(true, true),
+            'first_name' => $this->nameRule(false),
+            'last_name' => $this->nameRule(false),
+            'email' => $this->emailRule(false, true, true),
         ];
     }
 
     public function messages()
     {
         return [
-            'first_name.required' => __('validation.required'),
             'first_name.string' => __('validation.string'),
             'first_name.min' => __('validation.min.string', ['min' => 3]),
             'first_name.max' => __('validation.max.string', ['max' => 15]),
             'first_name.regex' => __('validation.regex.first_name'),
-            'last_name.required' =>  __('validation.required'),
             'last_name.string' => __('validation.string'),
             'last_name.min' => __('validation.min.string', ['min' => 3]),
             'last_name.max' => __('validation.max.string', ['max' => 15]),
             'last_name.regex' => __('validation.regex.last_name'),
-            'email.required' => __('validation.required'),
             'email.string' => __('validation.string'),
             'email.email' => __('validation.email'),
             'email.max' => __('validation.max.string', ['max' => 64]),
             'email.unique' => __('validation.unique.email'),
             'email.regex' => __('validation.regex.email'),
-            'password.required' => __('validation.required'),
-            'password.string' => __('validation.string'),
-            'password.min' => __('validation.min.password', ['min' => 8]),
-            'password.max' => __('validation.max.password', ['max' => 20]),
-            'password.confirmed' => __('validation.confirmed.password'),
-            'password.regex' => __('validation.regex.password'),
         ];
     }
 

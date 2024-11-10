@@ -74,7 +74,7 @@ class AuthController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return $this->returnError(__('errors.not_found.user'), 404);
+            return $this->returnError(__('errors.user.not_found'), 404);
         }
 
         if ($user->hasVerifiedEmail()) {
@@ -91,11 +91,11 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return $this->returnError(__('errors.not_found.user'), 404);
+            return $this->returnError(__('errors.user.not_found'), 404);
         }
 
         if ($user->email_verified_at) {
-            return $this->returnError(__('auth.success.email.already_verified'), 409);
+            return $this->returnError(__('auth.error.email.already_verified'), 409);
         }
 
         $maxAttempts = 3;

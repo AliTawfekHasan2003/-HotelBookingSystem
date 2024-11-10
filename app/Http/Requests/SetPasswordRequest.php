@@ -1,15 +1,16 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Traits\ResponseTrait;
+use App\Traits\UserValidationTrait;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class {{ class }} extends FormRequest
+class SetPasswordRequest extends FormRequest
 {
-    use ResponseTrait;
+    use ResponseTrait, UserValidationTrait;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -26,14 +27,20 @@ class {{ class }} extends FormRequest
      */
     public function rules(): array
     {
-        return [ //
-         ];
+        return [
+            'password' => $this->passwordRule(true, true),
+        ];
     }
 
     public function messages()
     {
         return [
-            //
+            'password.required' => __('validation.required'),
+            'password.string' => __('validation.string'),
+            'password.min' => __('validation.min.password', ['min' => 8]),
+            'password.max' => __('validation.max.password', ['max' => 20]),
+            'password.confirmed' => __('validation.confirmed.password'),
+            'password.regex' => __('validation.regex.password'),
         ];
     }
 

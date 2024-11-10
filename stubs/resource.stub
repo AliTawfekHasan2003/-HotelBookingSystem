@@ -14,6 +14,10 @@ class {{ class }} extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $obj_name = [
+            //
+        ];
+
+        return $obj_name;
     }
 }

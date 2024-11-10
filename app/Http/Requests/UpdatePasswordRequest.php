@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     use ResponseTrait, UserValidationTrait;
 
@@ -28,22 +28,24 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => $this->emailRule(true, false, false),
-            'password' => $this->passwordRule(false, false),
+            'current_password' => $this->passwordRule(false, false),
+            'new_password' => $this->passwordRule(true, true),
         ];
     }
 
     public function messages()
     {
         return [
-            'email.required' => __('validation.required'),
-            'email.string' => __('validation.string'),
-            'email.email' => __('validation.email'),
-            'email.exists' => __('validation.exists.email'),
-            'password.required' => __('validation.required'),
-            'password.string' => __('validation.string'),
-            'password.min' => __('validation.min.password', ['min' => 8]),
-            'password.max' => __('validation.max.password', ['max' => 20]),
+            'current_password.required' => __('validation.required'),
+            'current_password.string' => __('validation.string'),
+            'current_password.min' => __('validation.min.password', ['min' => 8]),
+            'current_password.max' => __('validation.max.password', ['max' => 20]),
+            'new_password.required' => __('validation.required'),
+            'new_password.string' => __('validation.string'),
+            'new_password.min' => __('validation.min.password', ['min' => 8]),
+            'new_password.max' => __('validation.max.password', ['max' => 20]),
+            'new_password.confirmed' => __('validation.confirmed.password'),
+            'new_password.regex' => __('validation.regex.password'),
         ];
     }
 

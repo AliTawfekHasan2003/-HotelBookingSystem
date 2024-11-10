@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
+use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +26,19 @@ Route::middleware('lang')->group(function () {
         Route::post('refresh', 'refresh')->middleware('auth');
     });
 
-    Route::controller(AuthSocialController::class)->group(function () {
-        Route::get('auth/google', 'redirectToGoogle');
-        Route::get('auth/google/callback', 'googleCallback');
-        Route::get('auth/github', 'redirectToGithub');
-        Route::get('auth/github/callback', 'githubCallback');
+    Route::controller(AuthSocialController::class)->prefix('auth')->group(function () {
+        Route::get('google', 'redirectToGoogle');
+        Route::get('google/callback', 'googleCallback');
+        Route::get('github', 'redirectToGithub');
+        Route::get('github/callback', 'githubCallback');
+    });
+
+    Route::middleware(['auth', 'role.user'])->group(function () {
+        Route::controller(UserController::class)->prefix('user')->group(function () {
+            Route::get('profile', 'show');
+            Route::put('profile', 'updateProfile');
+            Route::post('password', 'setPassword');
+            Route::put('password', 'updatePassword');
+        });
     });
 });
