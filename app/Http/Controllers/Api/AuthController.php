@@ -24,14 +24,14 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !$user->email_verified_at) {
-            return $this->returnError(__('auth.error.email.unverified'), 401);
+            return $this->returnError(__('auth.errors.email.unverified'), 401);
         }
 
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
 
         if (!$token) {
-            return $this->returnError(__('auth.error.unauthorized'), 401);
+            return $this->returnError(__('auth.errors.unauthorized'), 401);
         }
 
         return $this->returnLoginRefreshSuccess(__('auth.success.login'), 'user', $user, $token);
@@ -68,7 +68,7 @@ class AuthController extends Controller
     public function verifyEmail(Request $request, $id)
     {
         if (!$request->hasValidSignature()) {
-            return $this->returnError(__('auth.error.email.unvalid_signature'), 403);
+            return $this->returnError(__('auth.errors.email.unvalid_signature'), 403);
         }
 
         $user = User::find($id);
@@ -78,7 +78,7 @@ class AuthController extends Controller
         }
 
         if ($user->hasVerifiedEmail()) {
-            return $this->returnError(__('auth.error.email.already_verified'), 409);
+            return $this->returnError(__('auth.errors.email.already_verified'), 409);
         }
 
         $user->markEmailAsVerified();
@@ -95,7 +95,7 @@ class AuthController extends Controller
         }
 
         if ($user->email_verified_at) {
-            return $this->returnError(__('auth.error.email.already_verified'), 409);
+            return $this->returnError(__('auth.errors.email.already_verified'), 409);
         }
 
         $maxAttempts = 3;
@@ -104,7 +104,7 @@ class AuthController extends Controller
         if ($user->verification_attempts >= $maxAttempts) {
             $lastVerification = Carbon::parse($user->last_verification_attempt_at);
             if (Carbon::now()->diffInMinutes($lastVerification) < $waitingPeriod) {
-                return $this->returnError(__('auth.error.email.many_attempts'), 429);
+                return $this->returnError(__('auth.errors.email.many_attempts'), 429);
             }
             $user->verification_attempts = 0;
         }

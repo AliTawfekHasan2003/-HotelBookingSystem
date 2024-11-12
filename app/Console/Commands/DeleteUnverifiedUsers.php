@@ -28,13 +28,12 @@ class DeleteUnverifiedUsers extends Command
      */
     public function handle()
     {
-        $unverifiedUsers = User::where('email_verified_at', null)->where('created_at', '<', Carbon::now()->subDays(5))->get();
+        $fiveDaysAgo = Carbon::now()->subDays(5);
 
-        if ($unverifiedUsers->isNotEmpty()) {
-            foreach ($unverifiedUsers as $user) {
-                $user->delete();
-            }
-            Log::info("Unverified users older than 5 days have been deleted.");
+        $countUnverifiedUsers = User::where('email_verified_at', null)->where('created_at', '<', $fiveDaysAgo)->delete();
+
+        if ($countUnverifiedUsers > 0) {
+            Log::info("Successfully deleted {$countUnverifiedUsers} unverified users older than 5 days.");
         } else {
             Log::info("No unverified users older than 5 days were found.");
         }

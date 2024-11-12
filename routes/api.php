@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,15 @@ Route::middleware('lang')->group(function () {
         Route::get('google/callback', 'googleCallback');
         Route::get('github', 'redirectToGithub');
         Route::get('github/callback', 'githubCallback');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::controller(NotificationController::class)->prefix('notification')->group(function () {
+            Route::get('all', 'getAllNotifications');
+            Route::get('unread', 'getUnreadNotifications');
+            Route::put('markAsRead/{id}', 'markAsRead');
+            Route::put('markAllAsRead', 'markAllAsRead');
+        });
     });
 
     Route::middleware(['auth', 'role.user'])->group(function () {

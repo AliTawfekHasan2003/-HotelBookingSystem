@@ -15,7 +15,7 @@ return [
             'login' => "Successfully logged in using :provider.",
         ],
     ],
-    'error' => [
+    'errors' => [
         'unauthorized' => "Unauthorized: Password or email is invalid.",
         'email' => [
             'unverified' => "Please verify your email, Then log in again.",
@@ -26,7 +26,6 @@ return [
         'token_expired' => "Your session has expired, Please log in again.",
         'token_invalid' => "Your session is invalid, Please log in again.",
         'token_not_provided' => "No valid session found, Please log in to continue.",
-        'unexpected_error' => "An unexpected error occurred, Please try again later.",
         'social' => [
             'email_or_name' => "Email or name is missing. Please ensure that email and name permissions are enabled in your social account settings, then try again.",
         ],

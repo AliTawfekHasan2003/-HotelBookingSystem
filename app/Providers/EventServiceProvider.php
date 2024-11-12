@@ -7,8 +7,8 @@ use App\Listeners\SendVerificationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use Monolog\Handler\SendGridHandler;
+use App\Events\EmailUpdated;
+use App\Listeners\SendEmailUpdatedNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -24,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
 
         VerifyEmail::class => [
             SendVerificationEmail::class
+        ],
+
+        EmailUpdated::class => [
+            SendEmailUpdatedNotification::class
         ]
     ];
 

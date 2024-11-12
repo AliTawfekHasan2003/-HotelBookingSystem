@@ -21,7 +21,7 @@ trait SocialCallbackTrait
             $user_name = $providerUser->getName();
 
             if (is_null($email) || is_null($user_name)) {
-                return $this->returnError(__('auth.error.social.email_or_name'), 401);
+                return $this->returnError(__('auth.errors.social.email_or_name'), 401);
             }
 
             $user = User::with('socialAccounts')->where('email', $email)->first();
@@ -61,7 +61,7 @@ trait SocialCallbackTrait
         } catch (\Exception $e) {
             Log::error($provider . " login error:" . $e->getMessage());
 
-            return $this->returnError(__('auth.error.unexpected_error'), 500);
+            return $this->returnError(__('errors.unexpected_error'), 500);
         }
         return $this->returnLoginRefreshSuccess(__('auth.success.social.login', ['provider' => $provider]), 'user', $user, $token);
     }

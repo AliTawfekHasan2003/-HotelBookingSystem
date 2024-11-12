@@ -25,13 +25,13 @@ class CustomAuthJwtMiddleWare
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (TokenExpiredException $e) {
-            return $this->returnError(__('auth.error.token_expired'), 401);
+            return $this->returnError(__('auth.errors.token_expired'), 401);
         } catch (TokenInvalidException $e) {
-            return $this->returnError(__('auth.error.token_invalid'), 401);
+            return $this->returnError(__('auth.errors.token_invalid'), 401);
         } catch (JWTException $e) {
-            return $this->returnError(__('auth.error.token_not_provided'), 401);
+            return $this->returnError(__('auth.errors.token_not_provided'), 401);
         } catch (\Throwable $e) {
-            return $this->returnError(__('auth.error.unexpected_error'), 500);
+            return $this->returnError(__('errors.unexpected_error'), 500);
         }
         $request->attributes->set('user', $user);
 

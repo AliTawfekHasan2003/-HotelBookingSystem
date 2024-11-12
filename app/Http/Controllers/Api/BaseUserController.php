@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\EmailUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\UpdatePasswordRequest;
@@ -44,16 +45,21 @@ class BaseUserController extends Controller
             ]);
 
             if ($request->email && $request->email !== $oldEmail) {
-                $this->user->email_verified_at = null;
-                $this->user->verification_attempts = 0;
-                $this->user->last_verification_attempt_at = null;
-                $this->user->save();
+                $this->user->update([
+                    'email_verified_at' => null,
+                    'last_verification_attempt_at' => null,
+                    'verification_attempts' => 0,
+                ]);
 
                 if ($this->user->socialAccounts) {
                     $this->user->socialAccounts()->delete();
+                    $this->user->load('socialAccounts');
                 }
 
+                $newEmail = $request->email;
+
                 event(new VerifyEmail($this->user));
+                event(new EmailUpdated($this->user, $oldEmail, $newEmail));
                 DB::commit();
 
                 return $this->returnData(true, __('success.user.profile_update_with_email'), 'user', new UserResource($this->user));
@@ -64,7 +70,7 @@ class BaseUserController extends Controller
             DB::rollBack();
             Log::error("Failed to update profile for user: " . $e->getMessage());
 
-            return $this->returnError(__('auth.error.unexpected_error'), 500);
+            return $this->returnError(__('errors.unexpected_error'), 500);
         }
 
         return $this->returnData(true, __('success.user.profile_update'), 'user', new UserResource($this->user));

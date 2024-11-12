@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,6 +22,8 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'email_verified_at',
+        'last_verification_attempt_at',
+        'verification_attempts',
     ];
 
     /**
@@ -72,7 +73,8 @@ class User extends Authenticatable implements JWTSubject
         return $name[1] ?? '';
     }
 
-    public function socialAccounts(){
+    public function socialAccounts()
+    {
         return $this->hasMany(SocialAccount::class);
     }
 }
