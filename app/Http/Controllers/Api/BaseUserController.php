@@ -26,11 +26,11 @@ class BaseUserController extends Controller
         $this->user = Auth::user();
     }
 
-    public function show()
+    public function showProfile()
     {
         $user = $this->user->load('socialAccounts');
 
-        return $this->returnData(true, __('success.user.show'), 'user', new UserResource($user));
+        return $this->returnData(true, __('success.user.show_profile'), 'user', new UserResource($user));
     }
 
     public function updateProfile(UpdateProfileRequest $request)

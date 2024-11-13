@@ -6,7 +6,9 @@ return [
         'password_update' => "The password has been updated successfully.",
         'profile_update_with_email' => "Your account information has been updated successfully. Please check your new email to confirm it. We also recommend updating your email in any linked social media accounts.",
         'profile_update' => "Your account information has been updated successfully.",
-        'show' => "User details fetched successfully.",
+        'show_profile' => "Profile details fetched successfully.",
+        'show_user' => "User details fetched successfully.",
+        'index' => "Details of all users with verified accounts fetched successfully.",
     ],
 
     'notification' => [

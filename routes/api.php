@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
@@ -35,20 +36,31 @@ Route::middleware('lang')->group(function () {
     });
 
     Route::middleware('auth')->group(function () {
-        Route::controller(NotificationController::class)->prefix('notification')->group(function () {
-            Route::get('all', 'getAllNotifications');
+        Route::controller(NotificationController::class)->prefix('notifications')->group(function () {
+            Route::get('', 'getAllNotifications');
             Route::get('unread', 'getUnreadNotifications');
-            Route::put('markAsRead/{id}', 'markAsRead');
-            Route::put('markAllAsRead', 'markAllAsRead');
+            Route::put('mark_as_read/{id}', 'markAsRead');
+            Route::put('mark_all_as_read', 'markAllAsRead');
         });
     });
 
     Route::middleware(['auth', 'role.user'])->group(function () {
         Route::controller(UserController::class)->prefix('user')->group(function () {
-            Route::get('profile', 'show');
+            Route::get('profile', 'showProfile');
             Route::put('profile', 'updateProfile');
             Route::post('password', 'setPassword');
             Route::put('password', 'updatePassword');
+        });
+    });
+
+    Route::middleware(['auth', 'role.admin'])->group(function () {
+        Route::controller(AdminUserController::class)->prefix('admin')->group(function () {
+            Route::get('profile', 'showProfile');
+            Route::put('profile', 'updateProfile');
+            Route::post('password', 'setPassword');
+            Route::put('password', 'updatePassword');
+            Route::get('users', 'index');
+            Route::get('user/{id}', 'showUser');
         });
     });
 });
