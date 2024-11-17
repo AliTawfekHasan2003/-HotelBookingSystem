@@ -6,6 +6,7 @@ return [
         'not_found' => "User not found.",
         'password_already_added' => "The password has already been added.",
         'password_current_incorrect' => "The current password is incorrect.",
+        'role_already_assigned' => "This role has already been assigned to the user.",
     ],
 
     'notification' => [

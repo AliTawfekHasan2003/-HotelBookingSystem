@@ -9,6 +9,7 @@ return [
         'show_profile' => "Profile details fetched successfully.",
         'show_user' => "User details fetched successfully.",
         'index' => "Details of all users with verified accounts fetched successfully.",
+        'role_assign' => "The role has been assigned succefully.",
     ],
 
     'notification' => [

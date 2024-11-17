@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,18 @@ Route::middleware('lang')->group(function () {
             Route::put('password', 'updatePassword');
             Route::get('users', 'index');
             Route::get('user/{id}', 'showUser');
+        });
+    });
+
+    Route::middleware(['auth', 'role.super_admin'])->group(function () {
+        Route::controller(SuperAdminUserController::class)->prefix('super_admin')->group(function () {
+            Route::get('profile', 'showProfile');
+            Route::put('profile', 'updateProfile');
+            Route::post('password', 'setPassword');
+            Route::put('password', 'updatePassword');
+            Route::get('users', 'index');
+            Route::get('user/{id}', 'showUser');
+            Route::Put('user/{id}/assign_role', 'assignRole');
         });
     });
 });

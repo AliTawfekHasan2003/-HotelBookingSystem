@@ -6,6 +6,7 @@ return [
         'not_found' => ".المستخدم غير موجود",
         'password_already_added' => ".تم إضافة كلمة السر بالفعل",
         'password_current_incorrect' => ".كلمة المرور الحالية غير صحيحة",
+        'role_already_assigned' => ".هذا الدور تم تعيينه للمستخدم بالفعل",
     ],
 
     'notification' => [
