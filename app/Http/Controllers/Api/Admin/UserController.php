@@ -15,6 +15,9 @@ class UserController extends BaseUserController
     {
         $users = User::whereNotNull('email_verified_at')->with('socialAccounts')->paginate(20);
 
+        if ($users->isEmpty()) {
+            return $this->returnError(__('errors.user.not_found_index'), 404);
+        }
         return $this->returnPaginationData(true, __('success.user.index'), 'users', UserResource::collection($users));
     }
 

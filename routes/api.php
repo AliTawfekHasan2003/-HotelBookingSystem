@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
+use App\Http\Controllers\Api\User\RoomTypeController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,35 +46,43 @@ Route::middleware('lang')->group(function () {
         });
     });
 
-    Route::middleware(['auth', 'role.user'])->group(function () {
-        Route::controller(UserController::class)->prefix('user')->group(function () {
+    Route::middleware(['auth', 'role.user'])->prefix('user')->group(function () {
+        Route::controller(UserController::class)->group(function () {
             Route::get('profile', 'showProfile');
             Route::put('profile', 'updateProfile');
             Route::post('password', 'setPassword');
             Route::put('password', 'updatePassword');
         });
-    });
 
-    Route::middleware(['auth', 'role.admin'])->group(function () {
-        Route::controller(AdminUserController::class)->prefix('admin')->group(function () {
-            Route::get('profile', 'showProfile');
-            Route::put('profile', 'updateProfile');
-            Route::post('password', 'setPassword');
-            Route::put('password', 'updatePassword');
-            Route::get('users', 'index');
-            Route::get('user/{id}', 'showUser');
+        Route::controller(RoomTypeController::class)->prefix('room_types')->group(function () {
+            Route::get('', 'index');
+            Route::get('/favorite', 'getFavorite');
+            Route::get('/{id}', 'show');
+            Route::post('/{id}/favorite', 'markAsFavorite');
+            Route::delete('/{id}/favorite', 'unmarkAsFavorite');
         });
     });
 
-    Route::middleware(['auth', 'role.super_admin'])->group(function () {
-        Route::controller(SuperAdminUserController::class)->prefix('super_admin')->group(function () {
+    Route::middleware(['auth', 'role.admin'])->prefix('admin')->group(function () {
+        Route::controller(AdminUserController::class)->group(function () {
             Route::get('profile', 'showProfile');
             Route::put('profile', 'updateProfile');
             Route::post('password', 'setPassword');
             Route::put('password', 'updatePassword');
             Route::get('users', 'index');
-            Route::get('user/{id}', 'showUser');
-            Route::Put('user/{id}/assign_role', 'assignRole');
+            Route::get('users/{id}', 'showUser');
+        });
+    });
+
+    Route::middleware(['auth', 'role.super_admin'])->prefix('super_admin')->group(function () {
+        Route::controller(SuperAdminUserController::class)->group(function () {
+            Route::get('profile', 'showProfile');
+            Route::put('profile', 'updateProfile');
+            Route::post('password', 'setPassword');
+            Route::put('password', 'updatePassword');
+            Route::get('users', 'index');
+            Route::get('users/{id}', 'showUser');
+            Route::Put('users/{id}/assign_role', 'assignRole');
         });
     });
 });

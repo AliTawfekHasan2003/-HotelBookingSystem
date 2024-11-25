@@ -18,4 +18,12 @@ return [
         'markAsRead' => "The notification has been read successfully.",
         'markAllAsRead' => "All notifications have been read successfully.",
     ],
+
+    'room_type' => [
+        'index' => "Room types fetched successfully.",
+        'show' => "Room type fetched successfully.",
+        'favorite' => "Favorite room types fetched successfully.",
+        'add_to_favorite' => "Room type has been added to favorite successfully.",
+        'delete_from_favorite' => "Room type has been deleted from favorite successfully.",
+    ],
 ];

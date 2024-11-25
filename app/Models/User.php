@@ -73,6 +73,11 @@ class User extends Authenticatable implements JWTSubject
         return $name[1] ?? '';
     }
 
+    public function socialAccounts()
+    {
+        return $this->hasMany(SocialAccount::class);
+    }
+
     public function checkHasRole($role)
     {
         $hasRole = false;
@@ -82,10 +87,5 @@ class User extends Authenticatable implements JWTSubject
         }
 
         return $hasRole;
-    }
-
-    public function socialAccounts()
-    {
-        return $this->hasMany(SocialAccount::class);
     }
 }
