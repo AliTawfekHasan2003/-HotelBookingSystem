@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\TranslationTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class RoomTypeResource extends JsonResource
 {
@@ -22,7 +23,7 @@ class RoomTypeResource extends JsonResource
             'name' => $this->getAttributeTranslation('name') ?? null,
             'category' => $this->getAttributeTranslation('category') ?? null,
             'capacity' => $this->capacity,
-            'image' => $this->image,
+            'image' => Storage::url($this->image),
             'descraption' => $this->getAttributeTranslation('description') ?? null,
             'daily_price' => $this->daily_price,
             'monthly_price' => $this->monthly_price,

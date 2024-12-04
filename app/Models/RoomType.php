@@ -6,10 +6,11 @@ use App\Traits\TranslationTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RoomType extends Model
 {
-    use HasFactory, TranslationTrait;
+    use HasFactory, TranslationTrait, SoftDeletes;
 
     protected $fillable = [
         'image',

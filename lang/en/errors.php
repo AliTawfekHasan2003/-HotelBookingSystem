@@ -22,5 +22,6 @@ return [
         'not_found' => "Room type not found.",
         'already_favorite' => "Room type has already been added to favorite.",
         'not_in_favorite' => "Room type not in favorite.",
+        'already_soft_delete' => "Room type has already been deleted.",
     ],
 ];

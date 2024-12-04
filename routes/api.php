@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\RoomTypeController as AdminRoomTypeController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
@@ -72,6 +73,8 @@ Route::middleware('lang')->group(function () {
             Route::get('users', 'index');
             Route::get('users/{id}', 'showUser');
         });
+
+        Route::apiResource('room_types', AdminRoomTypeController::class);
     });
 
     Route::middleware(['auth', 'role.super_admin'])->prefix('super_admin')->group(function () {

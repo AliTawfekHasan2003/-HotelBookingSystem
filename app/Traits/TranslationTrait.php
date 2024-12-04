@@ -20,4 +20,18 @@ trait TranslationTrait
             $q->attribute($attribute)->where('value', 'like', "%{$value}%");
         });
     }
+
+    public function translationRule($isRequired, $language, $min)
+    {
+
+        $required = $isRequired ? ['required'] : ['nullable'];
+        $rule = ['string', 'min:' . $min . ''];
+
+        --$min;
+        $rule[] = $language === 'en'
+            ? 'regex:/^[\p{Latin}][\p{Latin}\d_., ]{' . $min . ',}$/u'
+            : 'regex:/^[\p{Arabic}][\p{Arabic}\d_.، ]{' . $min . ',}$/u';
+
+        return array_merge($required, $rule);
+    }
 }
