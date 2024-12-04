@@ -42,17 +42,17 @@ Route::middleware('lang')->group(function () {
         Route::controller(NotificationController::class)->prefix('notifications')->group(function () {
             Route::get('', 'getAllNotifications');
             Route::get('unread', 'getUnreadNotifications');
-            Route::put('mark_as_read/{id}', 'markAsRead');
-            Route::put('mark_all_as_read', 'markAllAsRead');
+            Route::patch('mark_as_read/{id}', 'markAsRead');
+            Route::patch('mark_all_as_read', 'markAllAsRead');
         });
     });
 
     Route::middleware(['auth', 'role.user'])->prefix('user')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('profile', 'showProfile');
-            Route::put('profile', 'updateProfile');
+            Route::patch('profile', 'updateProfile');
             Route::post('password', 'setPassword');
-            Route::put('password', 'updatePassword');
+            Route::patch('password', 'updatePassword');
         });
 
         Route::controller(RoomTypeController::class)->prefix('room_types')->group(function () {
@@ -67,9 +67,9 @@ Route::middleware('lang')->group(function () {
     Route::middleware(['auth', 'role.admin'])->prefix('admin')->group(function () {
         Route::controller(AdminUserController::class)->group(function () {
             Route::get('profile', 'showProfile');
-            Route::put('profile', 'updateProfile');
+            Route::patch('profile', 'updateProfile');
             Route::post('password', 'setPassword');
-            Route::put('password', 'updatePassword');
+            Route::patch('password', 'updatePassword');
             Route::get('users', 'index');
             Route::get('users/{id}', 'showUser');
         });
@@ -80,12 +80,12 @@ Route::middleware('lang')->group(function () {
     Route::middleware(['auth', 'role.super_admin'])->prefix('super_admin')->group(function () {
         Route::controller(SuperAdminUserController::class)->group(function () {
             Route::get('profile', 'showProfile');
-            Route::put('profile', 'updateProfile');
+            Route::patch('profile', 'updateProfile');
             Route::post('password', 'setPassword');
-            Route::put('password', 'updatePassword');
+            Route::patch('password', 'updatePassword');
             Route::get('users', 'index');
             Route::get('users/{id}', 'showUser');
-            Route::Put('users/{id}/assign_role', 'assignRole');
+            Route::patch('users/{id}/assign_role', 'assignRole');
         });
     });
 });
