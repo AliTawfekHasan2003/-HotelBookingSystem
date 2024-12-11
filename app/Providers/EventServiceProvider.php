@@ -2,14 +2,12 @@
 
 namespace App\Providers;
 
-use App\Events\SoftDelete;
 use App\Events\VerifyEmail;
 use App\Listeners\SendVerificationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\EmailUpdated;
-use App\Listeners\RoomTypeSoftDeleteListener;
 use App\Listeners\SendEmailUpdatedNotification;
 
 
@@ -31,10 +29,6 @@ class EventServiceProvider extends ServiceProvider
 
         EmailUpdated::class => [
             SendEmailUpdatedNotification::class
-        ],
-
-        SoftDelete::class => [
-            RoomTypeSoftDeleteListener::class,
         ],
     ];
 

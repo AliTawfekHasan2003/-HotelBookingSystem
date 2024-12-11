@@ -17,11 +17,15 @@ return [
 
     'room_type' => [
         'not_found_index_with_criteria' => "No room types found matching the given criteria.",
+        'not_found_index_trashed_with_criteria' => "No trashed room types found matching the given criteria.",
         'not_found_index' => "No room types available at the moment.",
+        'not_found_index_trashed' =>  "No trashed room types found.",
         'not_found_favorite' => "The favorites list does not contain any room types.",
         'not_found' => "Room type not found.",
         'already_favorite' => "Room type has already been added to favorite.",
         'not_in_favorite' => "Room type not in favorite.",
-        'already_soft_delete' => "Room type has already been deleted.",
+        'soft_delete' => "Unable to delete this room type.",
+        'restore' => "Unable to restore this room type from deletion.",
+        'force_delete' => "Unable to permanently delete this room type.",
     ],
 ];

@@ -14,25 +14,9 @@ class BaseRoomTypeController extends Controller
 
   public function index(Request $request)
   {
-
-    $query = RoomType::query();
-    $query = $query->with('translations');
-    $ifCriteria = false;
-
-    if ($request->capacity) {
-      $query->capacity($request->capacity);
-      $ifCriteria = true;
-    }
-
-    if ($request->name) {
-      $query->name($request->name);
-      $ifCriteria = true;
-    }
-
-    if ($request->category) {
-      $query->category($request->category);
-      $ifCriteria = true;
-    }
+    $result = RoomType::filterRoomTypes($request);
+    $query = $result['query'];
+    $ifCriteria = $result['ifCriteria'];
 
     $roomTypes = $query->paginate(10);
 
@@ -47,7 +31,7 @@ class BaseRoomTypeController extends Controller
   }
 
   public function show($id)
-  {
+  { 
     $roomType = RoomType::with('translations')->find($id);
 
     if (!$roomType) {

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\SuperAdmin\RoomTypeController as SuperAdminRoomTypeController;
 use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
 use App\Http\Controllers\Api\User\RoomTypeController;
 use App\Http\Controllers\Api\User\UserController;
@@ -87,5 +88,13 @@ Route::middleware('lang')->group(function () {
             Route::get('users/{id}', 'showUser');
             Route::patch('users/{id}/assign_role', 'assignRole');
         });
+
+        Route::controller(SuperAdminRoomTypeController::class)->prefix('room_types')->group([function () {
+            Route::get('/trashed', 'trashedIndex');
+            Route::get('/trashed/{id}', 'trashedShow');
+            Route::patch('/trashed/{id}/restore', 'trashedRestore');
+            Route::delete('/trashed/{id}/force', 'trashedForceDelete');
+        }]);
+        Route::apiResource('room_types', SuperAdminRoomTypeController::class);
     });
 });

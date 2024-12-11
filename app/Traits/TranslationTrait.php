@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 trait TranslationTrait
 {
@@ -33,5 +34,29 @@ trait TranslationTrait
             : 'regex:/^[\p{Arabic}][\p{Arabic}\d_.، ]{' . $min . ',}$/u';
 
         return array_merge($required, $rule);
+    }
+
+    public function handelSoftDeletingTranslations($status, $obj)
+    {
+        if (!$obj->translations()->exists()) {
+            Log::error('Translation operation failed. Object type: ' . get_class($obj) . ', ID: ' . $obj->id . '. No translations found.');
+            return false;
+        }
+        switch ($status) {
+            case 'soft':
+                $obj->translations()->delete();
+                break;
+            case 'force':
+                $obj->translations()->forceDelete();
+                break;
+            case 'restore':
+                $obj->translations()->restore();
+                break;
+            default:
+                Log::warning('Unhandled deleting status: ' . $status . '  Object type: ' . get_class($obj) . ' for object ID: ' . $obj->id);
+                return false;
+                break;
+        }
+        return true;
     }
 }

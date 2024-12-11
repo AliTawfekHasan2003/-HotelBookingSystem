@@ -16,9 +16,14 @@ trait ImageTrait
         return $imagePath;
     }
 
+    public function imageDelete($imagePath)
+    {
+        Storage::disk('public')->delete($imagePath);
+    }
+
     public function imageReplace($oldImagePath, $newImage, $folder)
     {
-        Storage::disk('public')->delete($oldImagePath);
+        $this->imageDelete($oldImagePath);
         $newImagePath = $this->imageStore($newImage, $folder);
 
         return $newImagePath;
