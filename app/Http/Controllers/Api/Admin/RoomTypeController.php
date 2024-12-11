@@ -9,15 +9,17 @@ use App\Http\Resources\RoomTypeResource;
 use App\Models\RoomType;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
+use App\Traits\TranslationTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Contracts\Translation\TranslatorTrait;
 use Throwable;
 
 class RoomTypeController extends BaseRoomTypeController
 {
-    use ResponseTrait, ImageTrait;
+    use ResponseTrait, ImageTrait, TranslationTrait;
 
     public function store(StoreOrUpdateRoomTypeRequest $request)
     {
@@ -79,7 +81,7 @@ class RoomTypeController extends BaseRoomTypeController
     {
         DB::beginTransaction();
         try {
-            $roomType = RoomType::with('translations')->find($id);
+            $roomType = RoomType::with(['translations', 'favorites'])->find($id);
             if (!$roomType) {
                 return $this->returnError(__('errors.room_type.not_found'), 404);
             }
@@ -124,17 +126,18 @@ class RoomTypeController extends BaseRoomTypeController
 
     public function destroy($id)
     {
-        $roomType = RoomType::find($id);
+        $roomType = RoomType::with(['translations', 'favorites'])->find($id);
 
         if (!$roomType) {
             return $this->returnError(__('errors.room_type.not_found'), 404);
         }
 
-        if ($roomType->trashed()) {
-            return $this->returnError(__('errors.room_type.already_soft_delete'), 409);
-        }
+        $ifSuccess = $this->handelSoftDeletingTranslations('soft', $roomType);
 
-        event(new SoftDelete($roomType));
+        if (!$ifSuccess) {
+            return $this->returnError(__('errors.room_type.soft_delete'), 500);
+        }
+        $roomType->favorites()->delete();
         $roomType->delete();
 
         return $this->returnSuccess(__('success.room_type.soft_delete'));

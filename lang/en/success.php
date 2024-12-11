@@ -21,12 +21,16 @@ return [
 
     'room_type' => [
         'index' => "Room types fetched successfully.",
+        'index_trashed' => "Trashed room types fetched successfully.",
         'show' => "Room type fetched successfully.",
+        'show_trashed' => "Trashed room type fetched successfully.",
         'favorite' => "Favorite room types fetched successfully.",
         'add_to_favorite' => "Room type has been added to favorite successfully.",
         'delete_from_favorite' => "Room type has been deleted from favorite successfully.",
         'create' => "New room type created successfully.",
         'update' => "Room type updated successfully.",
         'soft_delete' => "Room type deleted successfully.",
+        'restore' => "Room type restored from deletion successfully.",
+        'force_delete' => "Room type permanently deleted successfully.",
     ],
 ];
