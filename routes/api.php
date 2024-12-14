@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\SuperAdmin\RoomTypeController as SuperAdminRoomTypeController;
 use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
+use App\Http\Controllers\Api\User\RoomController;
 use App\Http\Controllers\Api\User\RoomTypeController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,14 @@ Route::middleware('lang')->group(function () {
         });
 
         Route::controller(RoomTypeController::class)->prefix('room_types')->group(function () {
+            Route::get('', 'index');
+            Route::get('/favorite', 'getFavorite');
+            Route::get('/{id}', 'show');
+            Route::post('/{id}/favorite', 'markAsFavorite');
+            Route::delete('/{id}/favorite', 'unmarkAsFavorite');
+        });
+
+        Route::controller(RoomController::class)->prefix('rooms')->group(function () {
             Route::get('', 'index');
             Route::get('/favorite', 'getFavorite');
             Route::get('/{id}', 'show');

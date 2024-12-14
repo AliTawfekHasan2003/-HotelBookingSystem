@@ -126,10 +126,15 @@ class RoomTypeController extends BaseRoomTypeController
 
     public function destroy($id)
     {
-        $roomType = RoomType::with(['translations', 'favorites'])->find($id);
+        $roomType = RoomType::with(['translations', 'favorites','rooms'])->find($id);
 
         if (!$roomType) {
             return $this->returnError(__('errors.room_type.not_found'), 404);
+        }
+
+        if($roomType->rooms->isNotEmpty())
+        {
+            return $this->returnError(__('errors.room_type.has_rooms'),409);
         }
 
         $ifSuccess = $this->handelSoftDeletingTranslations('soft', $roomType);

@@ -33,4 +33,12 @@ return [
         'restore' => "Room type restored from deletion successfully.",
         'force_delete' => "Room type permanently deleted successfully.",
     ],
+
+    'room' => [
+        'index' => "Rooms fetched successfully.",
+        'show' => "Room fetched successfully.",
+        'favorite' => "Favorite room types fetched successfully.",
+        'add_to_favorite' => "Room has been added to favorite successfully.",
+        'delete_from_favorite' => "Room has been deleted from favorite successfully.",
+    ],
 ];

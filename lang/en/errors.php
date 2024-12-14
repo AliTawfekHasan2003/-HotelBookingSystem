@@ -24,8 +24,18 @@ return [
         'not_found' => "Room type not found.",
         'already_favorite' => "Room type has already been added to favorite.",
         'not_in_favorite' => "Room type not in favorite.",
+        'has_rooms' => "Unable to delete a room type before deleting all the rooms it belongs to.",
         'soft_delete' => "Unable to delete this room type.",
         'restore' => "Unable to restore this room type from deletion.",
         'force_delete' => "Unable to permanently delete this room type.",
+    ],
+
+    'room' => [
+        'not_found_index_with_criteria' => "No rooms found matching the given criteria.",
+        'not_found_index' => "No rooms available at the moment.",
+        'not_found_favorite' => "The favorites list does not contain any rooms.",
+        'not_found' => "Room not found.",
+        'already_favorite' => "Room has already been added to favorite.",
+        'not_in_favorite' => "Room not in favorite.",
     ],
 ];

@@ -2,15 +2,12 @@
 
 namespace App\Http\Resources;
 
-use App\Traits\TranslationTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class RoomTypeResource extends JsonResource
+class RoomResource extends JsonResource
 {
-    use TranslationTrait;
-
     /**
      * Transform the resource into an array.
      *
@@ -18,18 +15,16 @@ class RoomTypeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $roomType = [
+        $room = [
             'id' => $this->id,
-            'name' => $this->getAttributeTranslation('name') ?? null,
-            'category' => $this->getAttributeTranslation('category') ?? null,
-            'capacity' => $this->capacity,
+            'room_type_id' => $this->room_type_id,
+            'floor' => $this->floor,
+            'number' => $this->number,
+            'view' => $this->getAttributeTranslation('view') ?? null,
             'image' => Storage::url($this->image),
             'description' => $this->getAttributeTranslation('description') ?? null,
-            'count_rooms' => $this->rooms->count(),
-            'daily_price' => $this->daily_price,
-            'monthly_price' => $this->monthly_price,
         ];
 
-        return $roomType;
+        return $room;
     }
 }

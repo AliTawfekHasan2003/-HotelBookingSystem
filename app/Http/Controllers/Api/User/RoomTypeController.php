@@ -25,7 +25,7 @@ class RoomTypeController extends BaseRoomTypeController
             return $this->returnError(__('errors.room_type.not_found_favorite'), 404);
         }
 
-        return  $this->returnPaginationData(true, __('success.room_type.favorite'), 'roomTypes', RoomTypeResource::collection($roomTypes), 200);
+        return  $this->returnPaginationData(true, __('success.room_type.favorite'), 'roomTypes', RoomTypeResource::collection($roomTypes));
     }
 
     public function markAsFavorite($id)
@@ -36,7 +36,8 @@ class RoomTypeController extends BaseRoomTypeController
             return $this->returnError(__('errors.room_type.not_found'), 404);
         }
 
-        if ($roomType->checkInFavorite()) {
+        $checkInFavorite = Favorite::checkInFavorite($roomType);
+        if ($checkInFavorite) {
             return $this->returnError(__('errors.room_type.already_favorite'), 409);
         }
 
@@ -53,11 +54,12 @@ class RoomTypeController extends BaseRoomTypeController
             return $this->returnError(__('errors.room_type.not_found'), 404);
         }
 
-        if (!$roomType->checkInFavorite()) {
+        $checkInFavorite = Favorite::checkInFavorite($roomType);
+        if (!$checkInFavorite) {
             return $this->returnError(__('errors.room_type.not_in_favorite'), 409);
         }
 
-        $roomType->favorites()->byUser(auth()->id())->delete();
+        Favorite::destroyFavorite($roomType);
 
         return $this->returnSuccess(__('success.room_type.delete_from_favorite'));
     }

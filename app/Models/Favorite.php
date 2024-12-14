@@ -34,4 +34,14 @@ class Favorite extends Model
     {
         return $query->where('user_id', $user_id);
     }
+
+    public static function checkInFavorite($obj)
+    {
+        return self::byUser(auth()->id())->where('favoriteable_type', get_class($obj))->where('favoriteable_id', $obj->id)->exists();
+    }
+
+    public static function destroyFavorite($obj)
+    {
+        return self::byUser(auth()->id())->where('favoriteable_type', get_class($obj))->where('favoriteable_id', $obj->id)->delete();
+    }
 }

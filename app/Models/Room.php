@@ -9,20 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class RoomType extends Model
+class Room extends Model
 {
     use HasFactory, TranslationTrait, SoftDeletes;
 
     protected $fillable = [
+        'room_type_id',
+        'floor',
+        'number',
         'image',
-        'capacity',
-        'daily_price',
-        'monthly_price',
-    ];
-
-    protected $casts = [
-        'daily_price' => 'decimal:2',
-        'monthly_price' => 'decimal:2',
     ];
 
     public function translations()
@@ -35,45 +30,45 @@ class RoomType extends Model
         return $this->MorphMany(Favorite::class, 'favoriteable');
     }
 
-    public function rooms()
+    public function roomType()
     {
-        return $this->hasMany(Room::class);
+        return $this->belongsTo(RoomType::class);
     }
 
-    public function scopeCapacity(Builder $query, $capacity)
+    public function scopeNumber(Builder $query, $number)
     {
-        return $query->where('capacity', '>=', $capacity);
+        return $query->where('number', $number);
     }
 
-    public function scopeName(Builder $query, $name)
+    public function scopeFloor(Builder $query, $floor)
     {
-        return $this->translationFilter($query, 'name', $name);
+        return $query->where('floor', $floor);
     }
 
-    public function scopeCategory(Builder $query, $category)
+    public function scopeView(Builder $query, $view)
     {
-        return $this->translationFilter($query, 'category', $category);
+        return $this->translationFilter($query, 'view', $view);
     }
 
-    public static function filterRoomTypes(Request $request, $trashed = false)
+    public static function filterRooms(Request $request, $trashed = false)
     {
         $query = self::query();
         $query = $trashed ? $query->onlyTrashed()->with('translations') : $query->with('translations');
 
         $ifCriteria = false;
 
-        if ($request->capacity) {
-            $query->capacity($request->capacity);
+        if ($request->number) {
+            $query->number($request->number);
             $ifCriteria = true;
         }
 
-        if ($request->name) {
-            $query->name($request->name);
+        if ($request->floor) {
+            $query->floor($request->floor);
             $ifCriteria = true;
         }
 
-        if ($request->category) {
-            $query->category($request->category);
+        if ($request->view) {
+            $query->view($request->view);
             $ifCriteria = true;
         }
 
