@@ -40,5 +40,8 @@ return [
         'favorite' => "Favorite room types fetched successfully.",
         'add_to_favorite' => "Room has been added to favorite successfully.",
         'delete_from_favorite' => "Room has been deleted from favorite successfully.",
+        'create' => "New room created successfully.",
+        'update' => "Room updated successfully.",
+        'soft_delete' => "Room deleted successfully.",
     ],
 ];

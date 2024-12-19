@@ -12,6 +12,8 @@ return [
         'string' => "This field must be at least :min characters long.",
         'capacity' => "The capacity must be at least :min person.",
         'price' => "The price must be at least :min.",
+        'floor' => "The floor must be at least :min.",
+        'number' => "The room number must be at least :min.",
     ],
 
     'max' => [
@@ -20,10 +22,13 @@ return [
         'capacity' => "The capacity must not exceed :max persone.",
         'price' => "The price must not exceed :max persons.",
         'image' => "The image size must not exceed :max KB.",
+        'floor' => "The floor must not exceed :max",
+        'number' => "The room number must not exceed :max",
     ],
 
     'unique' => [
         'email' => "The email address has already been taken.",
+        'floor_number' => "The combination of floor and room number must be unique.",
     ],
 
     'confirmed' => [
@@ -41,6 +46,7 @@ return [
 
     'exists' => [
         'email' => "The provided email does not exist in our records.",
+        'room_type_id' => "The provided room type does not exist in our records.",
     ],
 
     'in' => [

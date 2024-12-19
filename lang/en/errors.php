@@ -37,5 +37,6 @@ return [
         'not_found' => "Room not found.",
         'already_favorite' => "Room has already been added to favorite.",
         'not_in_favorite' => "Room not in favorite.",
+        'soft_delete' => "Unable to delete this room.",
     ],
 ];

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Events\SoftDelete;
 use App\Http\Controllers\Api\BaseRoomTypeController;
 use App\Http\Requests\StoreOrUpdateRoomTypeRequest;
 use App\Http\Resources\RoomTypeResource;
@@ -10,7 +9,6 @@ use App\Models\RoomType;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
 use App\Traits\TranslationTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -81,7 +79,7 @@ class RoomTypeController extends BaseRoomTypeController
     {
         DB::beginTransaction();
         try {
-            $roomType = RoomType::with(['translations', 'favorites'])->find($id);
+            $roomType = RoomType::with(['translations'])->find($id);
             if (!$roomType) {
                 return $this->returnError(__('errors.room_type.not_found'), 404);
             }

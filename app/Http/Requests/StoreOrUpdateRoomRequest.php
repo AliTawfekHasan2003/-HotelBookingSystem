@@ -4,15 +4,15 @@ namespace App\Http\Requests;
 
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use App\Traits\RoomTypeValidationTrait;
+use App\Traits\RoomValidationTrait;
 use App\Traits\TranslationTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreOrUpdateRoomTypeRequest extends FormRequest
+class StoreOrUpdateRoomRequest extends FormRequest
 {
-    use ResponseTrait, RoomTypeValidationTrait, TranslationTrait, ImageTrait;
+    use ResponseTrait, RoomValidationTrait, TranslationTrait, ImageTrait;
 
     public $isRequired;
 
@@ -34,41 +34,51 @@ class StoreOrUpdateRoomTypeRequest extends FormRequest
         $this->isRequired  = $this->isMethod('post');
 
         return [
-            'name_en' => $this->translationRule($this->isRequired, 'en', 3),
-            'name_ar' => $this->translationRule($this->isRequired, 'ar', 3),
-            'category_en' => $this->translationRule($this->isRequired, 'en', 3),
-            'category_ar' =>  $this->translationRule($this->isRequired, 'ar', 3),
+            'room_type_id' => $this->roomTypeIdRule($this->isRequired),
+            'view_en' => $this->translationRule($this->isRequired, 'en', 3),
+            'view_ar' => $this->translationRule($this->isRequired, 'ar', 3),
             'description_en' => $this->translationRule($this->isRequired, 'en', 10),
             'description_ar' => $this->translationRule($this->isRequired, 'ar', 10),
-            'capacity' => $this->capacityRule($this->isRequired),
-            'daily_price' => $this->priceRule($this->isRequired),
-            'monthly_price' => $this->priceRule($this->isRequired),
+            'floor' => $this->floorAndNumberRule($this->isRequired),
+            'number' => $this->floorAndNumberRule($this->isRequired),
             'image' => $this->imageRule($this->isRequired),
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $floor = $this->input('floor');
+            $number = $this->input('number');
+            $roomId = $this->route('room');
+
+            if ($floor || $number) {
+                if ($this->isDuplicateRoom($floor, $number, $roomId, $this->isRequired)) {
+                    $validator->errors()->add('floor_number', __('validation.unique.floor_number'));
+                }
+            }
+        });
+    }
     public function messages()
     {
         $messages = array_merge(
+            $this->roomTypeIdMessages(),
             $this->translataionMessages(),
-            $this->capacityMessages(),
-            $this->dailyPriceMessages(),
-            $this->monthlyPriceMessages(),
+            $this->floorMessages(),
+            $this->numberMessages(),
             $this->imageMessages(),
         );
 
         if ($this->isRequired) {
             return array_merge(
                 [
-                    'name_en.required' =>  __('validation.required'),
-                    'name_ar.required' =>  __('validation.required'),
-                    'category_en.required' =>  __('validation.required'),
-                    'category_ar.required' =>  __('validation.required'),
+                    'room_type_id.required' => __('validation.required'),
+                    'view_en.required' =>  __('validation.required'),
+                    'view_ar.required' =>  __('validation.required'),
                     'description_en.required' =>  __('validation.required'),
                     'description_ar.required' =>  __('validation.required'),
-                    'capacity.required' =>  __('validation.required'),
-                    'daily_price.required' =>  __('validation.required'),
-                    'monthly_price.required' => __('validation.required'),
+                    'floor.required' =>  __('validation.required'),
+                    'number.required' =>  __('validation.required'),
                     'image.required' =>  __('validation.required'),
                 ],
                 $messages,
@@ -76,6 +86,7 @@ class StoreOrUpdateRoomTypeRequest extends FormRequest
         }
         return $messages;
     }
+
 
     protected function failedValidation(Validator $validator)
     {
