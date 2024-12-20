@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\SuperAdmin\RoomController as SuperAdminRoomController;
 use App\Http\Controllers\Api\SuperAdmin\RoomTypeController as SuperAdminRoomTypeController;
 use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
 use App\Http\Controllers\Api\User\RoomController;
@@ -108,5 +109,13 @@ Route::middleware('lang')->group(function () {
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
         }]);
         Route::apiResource('room_types', SuperAdminRoomTypeController::class);
+
+        Route::controller(SuperAdminRoomController::class)->prefix('rooms')->group([function () {
+            Route::get('/trashed', 'trashedIndex');
+            Route::get('/trashed/{id}', 'trashedShow');
+            Route::patch('/trashed/{id}/restore', 'trashedRestore');
+            Route::delete('/trashed/{id}/force', 'trashedForceDelete');
+        }]);
+        Route::apiResource('rooms', SuperAdminRoomController::class);
     });
 });

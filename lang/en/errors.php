@@ -32,11 +32,15 @@ return [
 
     'room' => [
         'not_found_index_with_criteria' => "No rooms found matching the given criteria.",
+        'not_found_index_trashed_with_criteria' => "No trashed rooms found matching the given criteria.",
         'not_found_index' => "No rooms available at the moment.",
+        'not_found_index_trashed' =>  "No trashed rooms found.",
         'not_found_favorite' => "The favorites list does not contain any rooms.",
         'not_found' => "Room not found.",
         'already_favorite' => "Room has already been added to favorite.",
         'not_in_favorite' => "Room not in favorite.",
         'soft_delete' => "Unable to delete this room.",
+        'restore' => "Unable to restore this room from deletion.",
+        'force_delete' => "Unable to permanently delete this room.",
     ],
 ];

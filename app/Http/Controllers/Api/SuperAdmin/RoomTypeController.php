@@ -29,7 +29,7 @@ class RoomTypeController extends AdminRoomTypeController
                 return $this->returnError(__('errors.room_type.not_found_index_trashed'), 404);
         }
 
-        return  $this->returnPaginationData(true, __('success.room_type.index_trashed'), 'roomTypes', RoomTypeResource::collection($roomTypes), 200);
+        return  $this->returnPaginationData(true, __('success.room_type.index_trashed'), 'roomTypes', RoomTypeResource::collection($roomTypes));
     }
 
     public function trashedShow($id)

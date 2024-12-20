@@ -36,12 +36,16 @@ return [
 
     'room' => [
         'index' => "Rooms fetched successfully.",
+        'index_trashed' => "Trashed rooms fetched successfully.",
         'show' => "Room fetched successfully.",
+        'show_trashed' => "Trashed room fetched successfully.",
         'favorite' => "Favorite room types fetched successfully.",
         'add_to_favorite' => "Room has been added to favorite successfully.",
         'delete_from_favorite' => "Room has been deleted from favorite successfully.",
         'create' => "New room created successfully.",
         'update' => "Room updated successfully.",
         'soft_delete' => "Room deleted successfully.",
+        'restore' => "Room restored from deletion successfully.",
+        'force_delete' => "Room permanently deleted successfully.",
     ],
 ];
