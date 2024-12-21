@@ -24,6 +24,7 @@ return [
         'index_trashed' => "Trashed room types fetched successfully.",
         'show' => "Room type fetched successfully.",
         'show_trashed' => "Trashed room type fetched successfully.",
+        'rooms' => "Rooms for this type fetched successfully.",
         'favorite' => "Favorite room types fetched successfully.",
         'add_to_favorite' => "Room type has been added to favorite successfully.",
         'delete_from_favorite' => "Room type has been deleted from favorite successfully.",

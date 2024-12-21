@@ -22,6 +22,7 @@ return [
         'not_found_index_trashed' =>  "No trashed room types found.",
         'not_found_favorite' => "The favorites list does not contain any room types.",
         'not_found' => "Room type not found.",
+        'not_found_rooms' => "No rooms found for this type.",
         'already_favorite' => "Room type has already been added to favorite.",
         'not_in_favorite' => "Room type not in favorite.",
         'has_rooms' => "Unable to delete a room type before deleting all the rooms it belongs to.",

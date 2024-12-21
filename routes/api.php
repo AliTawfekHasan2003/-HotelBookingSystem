@@ -65,6 +65,7 @@ Route::middleware('lang')->group(function () {
             Route::get('/{id}', 'show');
             Route::post('/{id}/favorite', 'markAsFavorite');
             Route::delete('/{id}/favorite', 'unmarkAsFavorite');
+            Route::get('/{id}/rooms', 'rooms');
         });
 
         Route::controller(RoomController::class)->prefix('rooms')->group(function () {
@@ -87,6 +88,7 @@ Route::middleware('lang')->group(function () {
         });
 
         Route::apiResource('room_types', AdminRoomTypeController::class);
+        Route::get('room_types/{id}/rooms', [AdminRoomTypeController::class, 'rooms']);
 
         Route::apiResource('rooms', AdminRoomController::class);
     });
@@ -107,6 +109,7 @@ Route::middleware('lang')->group(function () {
             Route::get('/trashed/{id}', 'trashedShow');
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
+            Route::get('/{id}/rooms', 'rooms');
         }]);
         Route::apiResource('room_types', SuperAdminRoomTypeController::class);
 
