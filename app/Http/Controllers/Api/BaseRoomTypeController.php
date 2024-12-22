@@ -28,7 +28,7 @@ class BaseRoomTypeController extends Controller
         return $this->returnError(__('errors.room_type.not_found_index'), 404);
     }
 
-    return  $this->returnPaginationData(true, __('success.room_type.index'), 'roomTypes', RoomTypeResource::collection($roomTypes), 200);
+    return  $this->returnPaginationData(true, __('success.room_type.index'), 'roomTypes', RoomTypeResource::collection($roomTypes));
   }
 
   public function show($id)

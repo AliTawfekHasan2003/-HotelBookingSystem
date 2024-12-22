@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Room;
 use App\Http\Resources\RoomResource;
 use App\Traits\ResponseTrait;
@@ -26,7 +27,7 @@ class BaseRoomController extends Controller
         return $this->returnError(__('errors.room.not_found_index'), 404);
     }
 
-    return  $this->returnPaginationData(true, __('success.room.index'), 'rooms', RoomResource::collection($rooms), 200);
+    return  $this->returnPaginationData(true, __('success.room.index'), 'rooms', RoomResource::collection($rooms));
   }
 
   public function show($id)

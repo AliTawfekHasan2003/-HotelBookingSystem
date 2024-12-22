@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\BaseRoomController;
+use App\Http\Controllers\Api\BaseRoomController;
 use App\Models\Room;
 use App\Traits\ResponseTrait;
 use App\Http\Resources\RoomResource;

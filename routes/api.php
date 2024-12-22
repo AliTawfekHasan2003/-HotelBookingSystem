@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\SuperAdmin\RoomTypeController as SuperAdminRoomType
 use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
 use App\Http\Controllers\Api\User\RoomController;
 use App\Http\Controllers\Api\User\RoomTypeController;
+use App\Http\Controllers\Api\User\ServiceController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,14 @@ Route::middleware('lang')->group(function () {
         });
 
         Route::controller(RoomController::class)->prefix('rooms')->group(function () {
+            Route::get('', 'index');
+            Route::get('/favorite', 'getFavorite');
+            Route::get('/{id}', 'show');
+            Route::post('/{id}/favorite', 'markAsFavorite');
+            Route::delete('/{id}/favorite', 'unmarkAsFavorite');
+        });
+
+        Route::controller(ServiceController::class)->prefix('services')->group(function () {
             Route::get('', 'index');
             Route::get('/favorite', 'getFavorite');
             Route::get('/{id}', 'show');

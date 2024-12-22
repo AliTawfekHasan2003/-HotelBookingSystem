@@ -49,4 +49,12 @@ return [
         'restore' => "Room restored from deletion successfully.",
         'force_delete' => "Room permanently deleted successfully.",
     ],
+
+    'service' => [
+        'index' => "Services fetched successfully.",
+        'show' => "Service fetched successfully.",
+        'favorite' => "Favorite services fetched successfully.",
+        'add_to_favorite' => "Service has been added to favorite successfully.",
+        'delete_from_favorite' => "Service has been deleted from favorite successfully.",
+    ],
 ];

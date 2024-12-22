@@ -44,4 +44,13 @@ return [
         'restore' => "Unable to restore this room from deletion.",
         'force_delete' => "Unable to permanently delete this room.",
     ],
+
+    'service' => [
+        'not_found_index_with_criteria' => "No services found matching the given criteria.",
+        'not_found_index' => "No services available at the moment.",
+        'not_found_favorite' => "The favorites list does not contain any services.",
+        'not_found' => "Service not found.",
+        'already_favorite' => "Service has already been added to favorite.",
+        'not_in_favorite' => "Service not in favorite.",
+    ],
 ];
