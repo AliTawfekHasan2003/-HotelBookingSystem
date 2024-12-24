@@ -56,5 +56,8 @@ return [
         'favorite' => "Favorite services fetched successfully.",
         'add_to_favorite' => "Service has been added to favorite successfully.",
         'delete_from_favorite' => "Service has been deleted from favorite successfully.",
+        'create' => "New service created successfully.",
+        'update' => "Service updated successfully.",
+        'soft_delete' => "Service deleted successfully.",
     ],
 ];

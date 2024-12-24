@@ -5,6 +5,7 @@ return [
     'string' => "This field must be a string.",
     'integer' => "This field must be a integer.",
     'decimal' => "This field  must be numeric and must have exactly :number decimal places.",
+    'boolean' => "This field must be a boolean value.",
     'email' => "The email address must be a valid Gmail address.",
     'file_image' => "This field must be an image.",
     'min' => [
@@ -14,6 +15,7 @@ return [
         'price' => "The price must be at least :min.",
         'floor' => "The floor must be at least :min.",
         'number' => "The room number must be at least :min.",
+        'units' => "The service units count must be at least :min.",
     ],
 
     'max' => [
@@ -51,5 +53,7 @@ return [
 
     'in' => [
         'role' => "The role must be one of the following: [user, admin, super_admin].",
+        'price' => "The price value must be :value.",
+        'units' => "The service units count must be :value.",
     ],
 ];

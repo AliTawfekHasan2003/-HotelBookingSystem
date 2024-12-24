@@ -46,7 +46,7 @@ trait RoomTypeValidationTrait
         ];
     }
 
-    public function translataionMessages()
+    public function translationMessages()
     {
         return [
             'name_en.string' =>  __('validation.string'),
@@ -62,7 +62,7 @@ trait RoomTypeValidationTrait
             'category_en.regex' => __('validation.regex.translation_en'),
 
             'category_ar.string' =>  __('validation.string'),
-            'category_ar.min' => __('validation.min.string', ['min' => 10]),
+            'category_ar.min' => __('validation.min.string', ['min' => 3]),
             'category_ar.regex' => __('validation.regex.translation_ar'),
 
             'description_en.string' =>  __('validation.string'),

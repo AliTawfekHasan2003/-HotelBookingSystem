@@ -4,15 +4,16 @@ namespace App\Http\Requests;
 
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use App\Traits\RoomTypeValidationTrait;
+use App\Traits\ServiceValidationTrait;
 use App\Traits\TranslationTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreOrUpdateRoomTypeRequest extends FormRequest
+
+class StoreOrUpdateServiceRequest extends FormRequest
 {
-    use ResponseTrait, RoomTypeValidationTrait, TranslationTrait, ImageTrait;
+    use ResponseTrait, ServiceValidationTrait, TranslationTrait, ImageTrait;
 
     public $isRequired;
 
@@ -40,9 +41,11 @@ class StoreOrUpdateRoomTypeRequest extends FormRequest
             'category_ar' =>  $this->translationRule($this->isRequired, 'ar', 3),
             'description_en' => $this->translationRule($this->isRequired, 'en', 10),
             'description_ar' => $this->translationRule($this->isRequired, 'ar', 10),
-            'capacity' => $this->capacityRule($this->isRequired),
-            'daily_price' => $this->priceRule($this->isRequired),
-            'monthly_price' => $this->priceRule($this->isRequired),
+            'is_limited' => $this->limitedAndFreeRule($this->isRequired),
+            'total_units' => $this->unitsRule($this->filled('is_limited'), $this->input('is_limited'), $this->route('service')),
+            'is_free' => $this->limitedAndFreeRule($this->isRequired),
+            'daily_price' => $this->priceRule($this->filled('is_free'), $this->input('is_free'), $this->route('service')),
+            'monthly_price' => $this->priceRule($this->filled('is_free'), $this->input('is_free'), $this->route('service')),
             'image' => $this->imageRule($this->isRequired),
         ];
     }
@@ -51,7 +54,9 @@ class StoreOrUpdateRoomTypeRequest extends FormRequest
     {
         $messages = array_merge(
             $this->translationMessages(),
-            $this->capacityMessages(),
+            $this->limitedMessages(),
+            $this->unitsMessages(),
+            $this->freeMessages(),
             $this->dailyPriceMessages(),
             $this->monthlyPriceMessages(),
             $this->imageMessages(),
@@ -66,7 +71,9 @@ class StoreOrUpdateRoomTypeRequest extends FormRequest
                     'category_ar.required' =>  __('validation.required'),
                     'description_en.required' =>  __('validation.required'),
                     'description_ar.required' =>  __('validation.required'),
-                    'capacity.required' =>  __('validation.required'),
+                    'is_limited.required' =>  __('validation.required'),
+                    'total_units.required' =>  __('validation.required'),
+                    'is_free.required' =>  __('validation.required'),
                     'daily_price.required' =>  __('validation.required'),
                     'monthly_price.required' => __('validation.required'),
                     'image.required' =>  __('validation.required'),

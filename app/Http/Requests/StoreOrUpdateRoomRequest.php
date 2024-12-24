@@ -63,7 +63,7 @@ class StoreOrUpdateRoomRequest extends FormRequest
     {
         $messages = array_merge(
             $this->roomTypeIdMessages(),
-            $this->translataionMessages(),
+            $this->translationMessages(),
             $this->floorMessages(),
             $this->numberMessages(),
             $this->imageMessages(),

@@ -25,7 +25,7 @@ class ServiceResource extends JsonResource
             'total_units' => $this->total_units,
             'is_free' => $this->is_free,
             'daily_price' => $this->daily_price,
-            'monthly_price' => $this->daily_price,
+            'monthly_price' => $this->monthly_price,
         ];
 
         return $service;

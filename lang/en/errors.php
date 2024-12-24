@@ -52,5 +52,6 @@ return [
         'not_found' => "Service not found.",
         'already_favorite' => "Service has already been added to favorite.",
         'not_in_favorite' => "Service not in favorite.",
+        'soft_delete' => "Unable to delete this service.",
     ],
 ];

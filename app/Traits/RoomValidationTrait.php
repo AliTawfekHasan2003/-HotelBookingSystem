@@ -68,7 +68,7 @@ trait RoomValidationTrait
         ];
     }
 
-    public function translataionMessages()
+    public function translationMessages()
     {
         return [
             'view_en.string' =>  __('validation.string'),

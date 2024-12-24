@@ -14,6 +14,7 @@ class Service extends Model
     use ResponseTrait, TranslationTrait, SoftDeletes;
 
     protected $fillable = [
+        'image',
         'is_limited',
         'total_units',
         'is_free',
@@ -34,6 +35,11 @@ class Service extends Model
     public function favorites()
     {
         return $this->MorphMany(Favorite::class, 'favoriteable');
+    }
+
+    public function roomTypeServices()
+    {
+        return $this->hasMany(RoomTypeService::class);
     }
 
     public function scopeIsLimited(Builder $query, $isLimited)
