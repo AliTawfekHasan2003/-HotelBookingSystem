@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\BaseRoomController;
+use App\Http\Controllers\Api\BaseRoomController as ApiBaseRoomController;
 use App\Http\Requests\StoreOrUpdateRoomRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class RoomController extends BaseRoomController
+class RoomController extends ApiBaseRoomController
 {
     use ResponseTrait, TranslationTrait, ImageTrait;
 

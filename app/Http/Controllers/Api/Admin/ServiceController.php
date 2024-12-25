@@ -132,7 +132,7 @@ class ServiceController extends BaseServiceController
 
     public function destroy($id)
     {
-        $service = Service::with(['translations', 'favorites'])->find($id);
+        $service = Service::with(['translations', 'favorites','roomTypeServices'])->find($id);
 
         if (!$service) {
             return $this->returnError(__('errors.service.not_found'), 404);
