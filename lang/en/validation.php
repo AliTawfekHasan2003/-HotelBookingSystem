@@ -49,6 +49,7 @@ return [
     'exists' => [
         'email' => "The provided email does not exist in our records.",
         'room_type_id' => "The provided room type does not exist in our records.",
+        'service_id' => "The provided service does not exist in our records.",
     ],
 
     'in' => [

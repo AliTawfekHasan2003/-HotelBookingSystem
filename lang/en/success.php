@@ -64,4 +64,9 @@ return [
         'restore' => "Service restored from deletion successfully.",
         'force_delete' => "Service permanently deleted successfully.",
     ],
+
+    'room_type_service' => [
+        'assign' => "Service assigned to room Type successfully.",
+        'revoke' => "Service revoked from room Type successfully.",
+    ],
 ];

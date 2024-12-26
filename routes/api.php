@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\RoomTypeServiceController;
 use App\Http\Controllers\Api\SuperAdmin\RoomController as SuperAdminRoomController;
 use App\Http\Controllers\Api\SuperAdmin\RoomTypeController as SuperAdminRoomTypeController;
 use App\Http\Controllers\Api\SuperAdmin\ServiceController as SuperAdminServiceController;
@@ -104,6 +105,11 @@ Route::middleware('lang')->group(function () {
         Route::apiResource('rooms', AdminRoomController::class);
 
         Route::apiResource('services', AdminServiceController::class);
+
+        Route::controller(RoomTypeServiceController::class)->prefix('room_type_services')->group(function () {
+            Route::post('', 'store');
+            Route::delete('', 'destroy');
+        });
     });
 
     Route::middleware(['auth', 'role.super_admin'])->prefix('super_admin')->group(function () {
@@ -117,29 +123,34 @@ Route::middleware('lang')->group(function () {
             Route::patch('users/{id}/assign_role', 'assignRole');
         });
 
-        Route::controller(SuperAdminRoomTypeController::class)->prefix('room_types')->group([function () {
+        Route::controller(SuperAdminRoomTypeController::class)->prefix('room_types')->group(function () {
             Route::get('/trashed', 'trashedIndex');
             Route::get('/trashed/{id}', 'trashedShow');
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
             Route::get('/{id}/rooms', 'rooms');
-        }]);
+        });
         Route::apiResource('room_types', SuperAdminRoomTypeController::class);
 
-        Route::controller(SuperAdminRoomController::class)->prefix('rooms')->group([function () {
+        Route::controller(SuperAdminRoomController::class)->prefix('rooms')->group(function () {
             Route::get('/trashed', 'trashedIndex');
             Route::get('/trashed/{id}', 'trashedShow');
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
-        }]);
+        });
         Route::apiResource('rooms', SuperAdminRoomController::class);
 
-        Route::controller(SuperAdminServiceController::class)->prefix('services')->group([function () {
+        Route::controller(SuperAdminServiceController::class)->prefix('services')->group(function () {
             Route::get('/trashed', 'trashedIndex');
             Route::get('/trashed/{id}', 'trashedShow');
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
-        }]);
+        });
         Route::apiResource('services', SuperAdminServiceController::class);
+
+        Route::controller(RoomTypeServiceController::class)->prefix('/room_type_services')->group(function () {
+            Route::post('', 'store');
+            Route::delete('', 'destroy');
+        });
     });
 });

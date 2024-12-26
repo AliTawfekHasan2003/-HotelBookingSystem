@@ -58,4 +58,9 @@ return [
         'restore' => "Unable to restore this service from deletion.",
         'force_delete' => "Unable to permanently delete this service.",
     ],
+
+    'room_type_service' => [
+        'already_assign' => "Service has already been assigned to room type.",
+        'not_assign' => "This service not assign to room type.",
+    ],
 ];
