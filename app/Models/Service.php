@@ -42,6 +42,11 @@ class Service extends Model
         return $this->hasMany(RoomTypeService::class);
     }
 
+    public function roomTypes()
+    {
+        return $this->belongsToMany(RoomType::class,'room_type_services');
+    }
+
     public function scopeIsLimited(Builder $query, $isLimited)
     {
         return $query->where('is_limited', $isLimited);

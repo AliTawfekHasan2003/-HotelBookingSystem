@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomResource;
 use App\Http\Resources\RoomTypeResource;
+use App\Http\Resources\ServiceResource;
 use App\Models\RoomType;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -56,6 +57,23 @@ class BaseRoomTypeController extends Controller
       return $this->returnError(__('errors.room_type.not_found_rooms'), 404);
     }
 
-    return $this->returnPaginationData(true, __('success.room_type.rooms'), 'rooms', new RoomResource($rooms));
+    return $this->returnPaginationData(true, __('success.room_type.rooms'), 'rooms',  RoomResource::collection($rooms));
+  }
+
+  public function services($id)
+  {
+    $roomType = RoomType::with('translations')->find($id);
+
+    if (!$roomType) {
+      return $this->returnError(__('errors.room_type.not_found'), 404);
+    }
+
+    $services = $roomType->services()->paginate(10);
+
+    if ($services->isEmpty()) {
+      return $this->returnError(__('errors.room_type.not_found_services'), 404);
+    }
+
+    return $this->returnPaginationData(true, __('success.room_type.services'), 'services',  ServiceResource::collection($services));
   }
 }

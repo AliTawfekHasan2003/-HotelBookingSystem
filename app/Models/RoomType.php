@@ -40,6 +40,16 @@ class RoomType extends Model
         return $this->hasMany(Room::class);
     }
 
+    public function roomTypeServices()
+    {
+        return $this->hasMany(RoomTypeService::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'room_type_services');
+    }
+
     public function scopeCapacity(Builder $query, $capacity)
     {
         return $query->where('capacity', '>=', $capacity);

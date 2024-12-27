@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoomTypeResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use App\Traits\ResponseTrait;
@@ -40,5 +41,22 @@ class BaseServiceController extends Controller
     }
 
     return $this->returnData(true, __('success.service.show'), 'service', new ServiceResource($service));
+  }
+
+  public function roomTypes($id)
+  {
+    $service = Service::with('translations')->find($id);
+
+    if (!$service) {
+      return $this->returnError(__('errors.service.not_found'), 404);
+    }
+
+    $roomTypes = $service->roomTypes()->paginate(10);
+
+    if ($roomTypes->isEmpty()) {
+      return $this->returnError(__('errors.service.not_found_room_types'), 404);
+    }
+
+    return $this->returnPaginationData(true, __('success.service.room_types'), 'roomTypes',  RoomTypeResource::collection($roomTypes));
   }
 }

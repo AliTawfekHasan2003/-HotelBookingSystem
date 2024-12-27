@@ -11,8 +11,6 @@ use App\Traits\ResponseTrait;
 use App\Traits\TranslationTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Contracts\Translation\TranslatorTrait;
 use Throwable;
 
 class RoomTypeController extends BaseRoomTypeController
@@ -124,7 +122,7 @@ class RoomTypeController extends BaseRoomTypeController
 
     public function destroy($id)
     {
-        $roomType = RoomType::with(['translations', 'favorites','rooms'])->find($id);
+        $roomType = RoomType::with(['translations', 'favorites','rooms','roomTypeServices'])->find($id);
 
         if (!$roomType) {
             return $this->returnError(__('errors.room_type.not_found'), 404);
@@ -134,12 +132,18 @@ class RoomTypeController extends BaseRoomTypeController
         {
             return $this->returnError(__('errors.room_type.has_rooms'),409);
         }
-
+        
         $ifSuccess = $this->handelSoftDeletingTranslations('soft', $roomType);
 
         if (!$ifSuccess) {
             return $this->returnError(__('errors.room_type.soft_delete'), 500);
         }
+
+        if($roomType->roomTypeServices)
+        {
+           $roomType->roomTypeServices()->delete();
+        }
+
         $roomType->favorites()->delete();
         $roomType->delete();
 

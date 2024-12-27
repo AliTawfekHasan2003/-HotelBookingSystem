@@ -70,6 +70,7 @@ Route::middleware('lang')->group(function () {
             Route::post('/{id}/favorite', 'markAsFavorite');
             Route::delete('/{id}/favorite', 'unmarkAsFavorite');
             Route::get('/{id}/rooms', 'rooms');
+            Route::get('/{id}/services', 'services');
         });
 
         Route::controller(RoomController::class)->prefix('rooms')->group(function () {
@@ -86,6 +87,7 @@ Route::middleware('lang')->group(function () {
             Route::get('/{id}', 'show');
             Route::post('/{id}/favorite', 'markAsFavorite');
             Route::delete('/{id}/favorite', 'unmarkAsFavorite');
+            Route::get('/{id}/room_types', 'roomTypes');
         });
     });
 
@@ -99,11 +101,15 @@ Route::middleware('lang')->group(function () {
             Route::get('users/{id}', 'showUser');
         });
 
+        Route::controller(AdminRoomTypeController::class)->prefix('room_types')->group(function () {
+            Route::get('/{id}/rooms', 'rooms');
+            Route::get('/{id}/services', 'services');
+        });
         Route::apiResource('room_types', AdminRoomTypeController::class);
-        Route::get('room_types/{id}/rooms', [AdminRoomTypeController::class, 'rooms']);
 
         Route::apiResource('rooms', AdminRoomController::class);
 
+        Route::get('services/{id}/room_types', [AdminServiceController::class, 'roomTypes']);
         Route::apiResource('services', AdminServiceController::class);
 
         Route::controller(RoomTypeServiceController::class)->prefix('room_type_services')->group(function () {
@@ -129,6 +135,7 @@ Route::middleware('lang')->group(function () {
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
             Route::get('/{id}/rooms', 'rooms');
+            Route::get('/{id}/services', 'services');
         });
         Route::apiResource('room_types', SuperAdminRoomTypeController::class);
 
@@ -145,6 +152,7 @@ Route::middleware('lang')->group(function () {
             Route::get('/trashed/{id}', 'trashedShow');
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
+            Route::get('/{id}/room_types', 'roomTypes');
         });
         Route::apiResource('services', SuperAdminServiceController::class);
 

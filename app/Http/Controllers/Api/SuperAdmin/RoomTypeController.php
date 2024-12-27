@@ -56,6 +56,12 @@ class RoomTypeController extends AdminRoomTypeController
         if (!$ifSuccess) {
             return $this->returnError(__('errors.room_type.restore'), 500);
         }
+
+        $roomTypeServices = $roomType->roomTypeServices()->onlyTrashed();
+        if($roomTypeServices)
+        {
+           $roomTypeServices->restore();
+        }
         $roomType->restore();
 
         return $this->returnSuccess(__('success.room_type.restore'));
@@ -74,6 +80,14 @@ class RoomTypeController extends AdminRoomTypeController
         if (!$ifSuccess) {
             return $this->returnError(__('errors.room_type.force_delete'), 500);
         }
+
+        $roomTypeServices = $roomType->roomTypeServices()->onlyTrashed();
+
+        if($roomTypeServices)
+        {
+           $roomTypeServices->forceDelete();
+        }
+
         $this->imageDelete($roomType->image);
         $roomType->forceDelete();
 
