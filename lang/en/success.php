@@ -41,7 +41,9 @@ return [
         'index_trashed' => "Trashed rooms fetched successfully.",
         'show' => "Room fetched successfully.",
         'show_trashed' => "Trashed room fetched successfully.",
+        'bookings' => "Bookings for this room fetched successfully.",
         'favorite' => "Favorite room types fetched successfully.",
+        'unavailable_dates' => "Unavailable dates for this room fetched successfully.",
         'add_to_favorite' => "Room has been added to favorite successfully.",
         'delete_from_favorite' => "Room has been deleted from favorite successfully.",
         'create' => "New room created successfully.",
@@ -56,9 +58,12 @@ return [
         'index_trashed' => "Trashed services fetched successfully.",
         'show' => "Service fetched successfully.",
         'show_trashed' => "Trashed service fetched successfully.",
-        'room_types' => "The room types associated with this service fetched successfully.",
+        'room_types' => "Room types associated with this service fetched successfully.",
+        'bookings' => "Bookings for this service fetched successfully.",
         'favorite' => "Favorite services fetched successfully.",
+        'unavailable_dates' => "Unavailable dates for this service fetched successfully.",
         'add_to_favorite' => "Service has been added to favorite successfully.",
+        'limited_units' => "The number of units available in this service fetched successfully.",
         'delete_from_favorite' => "Service has been deleted from favorite successfully.",
         'create' => "New service created successfully.",
         'update' => "Service updated successfully.",
@@ -70,5 +75,20 @@ return [
     'room_type_service' => [
         'assign' => "Service assigned to room Type successfully.",
         'revoke' => "Service revoked from room Type successfully.",
+    ],
+
+    'booking' => [
+        'total_cost' => 'The total cost for the booking calculate successfully.',
+        'payment_intent' => "Payment initiated successfully.",
+        'payment_confirm' => "Payment confirmed successfully.",
+    ],
+
+    'invoice' => [
+        'index_user' => "All your invoices fetched successfully.",
+        'index' => "All invoices fetched successfully.",
+        'show_user' => "Your invoice fetched successfully.",
+        'show' => "The invoice fetched successfully.",
+        'bookings_user' => "All bookings for your invoice fetched successfully.",
+        'bookings' => "All bookings for this invoice fetched successfully.",
     ],
 ];

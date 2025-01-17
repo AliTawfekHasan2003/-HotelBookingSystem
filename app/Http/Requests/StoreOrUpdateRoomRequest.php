@@ -47,6 +47,10 @@ class StoreOrUpdateRoomRequest extends FormRequest
 
     public function withValidator($validator)
     {
+        if ($validator->fails()) {
+            return;
+        }
+
         $validator->after(function ($validator) {
             $floor = $this->input('floor');
             $number = $this->input('number');

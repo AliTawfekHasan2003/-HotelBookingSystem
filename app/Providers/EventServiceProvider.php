@@ -8,8 +8,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\EmailUpdated;
+use App\Events\InvoicePaid;
 use App\Listeners\SendEmailUpdatedNotification;
-
+use App\Listeners\SendInvoicePaidNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,10 @@ class EventServiceProvider extends ServiceProvider
 
         EmailUpdated::class => [
             SendEmailUpdatedNotification::class
+        ],
+
+        InvoicePaid::class => [
+            SendInvoicePaidNotification::class
         ],
     ];
 

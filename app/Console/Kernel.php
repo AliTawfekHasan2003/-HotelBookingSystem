@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command("users:delete-unverified-users")->daily();
         $schedule->command("notifications:delete-old")->weekly();
+        $schedule->command("invoices:update-pending-invoice-status")->everyFiveMinutes();
     }
 
     /**

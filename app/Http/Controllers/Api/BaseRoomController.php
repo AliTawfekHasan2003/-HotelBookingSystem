@@ -40,4 +40,21 @@ class BaseRoomController extends Controller
 
     return $this->returnData(true, __('success.room.show'), 'room', new RoomResource($room));
   }
+
+  public function unavailableDates($id)
+  {
+    $room = Room::find($id);
+
+    if (!$room) {
+      return $this->returnError(__('errors.room.not_found'), 404);
+    }
+
+    $unavailableDates = $room->bookings()->getUnavailableDates();
+
+    if ($unavailableDates->isEmpty()) {
+      return $this->returnError(__('errors.room.not_found_dates'), 404);
+    }
+
+    return $this->returnData(true, __('success.room.unavailable_dates'), 'unavailableDates', $unavailableDates);
+  }
 }

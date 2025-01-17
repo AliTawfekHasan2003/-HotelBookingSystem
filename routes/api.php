@@ -8,10 +8,13 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthSocialController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\RoomTypeServiceController;
+use App\Http\Controllers\Api\SuperAdmin\InvoiceController as SuperAdminInvoiceController;
 use App\Http\Controllers\Api\SuperAdmin\RoomController as SuperAdminRoomController;
 use App\Http\Controllers\Api\SuperAdmin\RoomTypeController as SuperAdminRoomTypeController;
 use App\Http\Controllers\Api\SuperAdmin\ServiceController as SuperAdminServiceController;
 use App\Http\Controllers\Api\SuperAdmin\UserController as SuperAdminUserController;
+use App\Http\Controllers\Api\User\BookingController;
+use App\Http\Controllers\Api\User\InvoiceController;
 use App\Http\Controllers\Api\User\RoomController;
 use App\Http\Controllers\Api\User\RoomTypeController;
 use App\Http\Controllers\Api\User\ServiceController;
@@ -79,6 +82,7 @@ Route::middleware('lang')->group(function () {
             Route::get('/{id}', 'show');
             Route::post('/{id}/favorite', 'markAsFavorite');
             Route::delete('/{id}/favorite', 'unmarkAsFavorite');
+            Route::get('/{id}/unavailable_dates', 'unavailableDates');
         });
 
         Route::controller(ServiceController::class)->prefix('services')->group(function () {
@@ -88,6 +92,19 @@ Route::middleware('lang')->group(function () {
             Route::post('/{id}/favorite', 'markAsFavorite');
             Route::delete('/{id}/favorite', 'unmarkAsFavorite');
             Route::get('/{id}/room_types', 'roomTypes');
+            Route::get('/{id}/available_units', 'limitedUnits');
+        });
+
+        Route::controller(BookingController::class)->prefix('bookings')->group(function () {
+            Route::post('/calculate_cost', 'calculateCost');
+            Route::post('/payment_intent', 'paymentIntent')->name('payment_intent');
+            Route::post('/confirm_payment', 'confirmPayment');
+        });
+
+        Route::controller(InvoiceController::class)->prefix('invoices')->group(function () {
+            Route::get('', 'index');
+            Route::get('/{id}', 'show');
+            Route::get('/{id}/bookings', 'bookings');
         });
     });
 
@@ -107,9 +124,14 @@ Route::middleware('lang')->group(function () {
         });
         Route::apiResource('room_types', AdminRoomTypeController::class);
 
+        Route::get('rooms/{id}/unavailable_dates', [AdminRoomController::class, 'unavailableDates']);
         Route::apiResource('rooms', AdminRoomController::class);
 
-        Route::get('services/{id}/room_types', [AdminServiceController::class, 'roomTypes']);
+        Route::controller(AdminServiceController::class)->prefix('services')->group(function () {
+            Route::get('/{id}/available_units', 'limitedUnits');
+            Route::get('/{id}/unavailable_dates', 'unavailableDates');
+            Route::get('/{id}/room_types', 'roomTypes');
+        });
         Route::apiResource('services', AdminServiceController::class);
 
         Route::controller(RoomTypeServiceController::class)->prefix('room_type_services')->group(function () {
@@ -144,6 +166,8 @@ Route::middleware('lang')->group(function () {
             Route::get('/trashed/{id}', 'trashedShow');
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
+            Route::get('/{id}/unavailable_dates', 'unavailableDates');
+            Route::get('/{id}/bookings', 'bookings');
         });
         Route::apiResource('rooms', SuperAdminRoomController::class);
 
@@ -153,12 +177,21 @@ Route::middleware('lang')->group(function () {
             Route::patch('/trashed/{id}/restore', 'trashedRestore');
             Route::delete('/trashed/{id}/force', 'trashedForceDelete');
             Route::get('/{id}/room_types', 'roomTypes');
+            Route::get('/{id}/unavailable_dates', 'unavailableDates');
+            Route::get('/{id}/available_units', 'limitedUnits');
+            Route::get('/{id}/bookings', 'bookings');
         });
         Route::apiResource('services', SuperAdminServiceController::class);
 
         Route::controller(RoomTypeServiceController::class)->prefix('/room_type_services')->group(function () {
             Route::post('', 'store');
             Route::delete('', 'destroy');
+        });
+
+        Route::controller(SuperAdminInvoiceController::class)->prefix('invoices')->group(function () {
+            Route::get('', 'index');
+            Route::get('/{id}', 'show');
+            Route::get('/{id}/bookings', 'bookings');
         });
     });
 });

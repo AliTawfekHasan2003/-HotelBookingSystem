@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\SuperAdmin;
 
 use App\Http\Controllers\Api\Admin\ServiceController as AdminServiceController;
+use App\Http\Resources\BookingResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use App\Traits\ImageTrait;
@@ -89,5 +90,23 @@ class ServiceController extends AdminServiceController
         $service->forceDelete();
 
         return $this->returnSuccess(__('success.service.force_delete'));
+    }
+
+    public function bookings($id)
+    {
+        $service = Service::find($id);
+
+        if (!$service) {
+            return $this->returnError(__('errors.service.not_found'), 404);
+        }
+
+        $bookings = $service->bookings()->paginate(10);
+
+        if($bookings->isEmpty())
+        {
+            return $this->returnError(__('errors.service.not_found_bookings'));
+        }
+
+        return $this->returnPaginationData(true, __('success.service.bookings'), 'bookings', BookingResource::collection($bookings));
     }
 }

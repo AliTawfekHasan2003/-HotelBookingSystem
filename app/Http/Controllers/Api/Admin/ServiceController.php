@@ -91,7 +91,7 @@ class ServiceController extends BaseServiceController
 
             $isLimited = $request->is_limited ?? $service->is_limited;
             $isFree = $request->is_free ?? $service->is_free;
-            $totalUnits = ($isLimited == false)  ? 0 : ($request->total_units ?? $service->total_units);  
+            $totalUnits = ($isLimited == false)  ? 0 : ($request->total_units ?? $service->total_units);
             $dailyPrice = ($isFree == true) ? 0.00 : ($request->daily_price ?? $service->daily_price);
             $monthlyPrice = ($isFree == true) ? 0.00 : ($request->monthly_price ?? $service->monthly_price);
 
@@ -132,7 +132,7 @@ class ServiceController extends BaseServiceController
 
     public function destroy($id)
     {
-        $service = Service::with(['translations', 'favorites','roomTypeServices'])->find($id);
+        $service = Service::with(['translations', 'favorites', 'roomTypeServices'])->find($id);
 
         if (!$service) {
             return $this->returnError(__('errors.service.not_found'), 404);
@@ -151,5 +151,26 @@ class ServiceController extends BaseServiceController
         $service->delete();
 
         return $this->returnSuccess(__('success.service.soft_delete'));
+    }
+
+    public function unavailableDates($id)
+    {
+        $service = service::find($id);
+
+        if (!$service) {
+            return $this->returnError(__('errors.service.not_found'), 404);
+        }
+
+        if (!$service->is_limited) {
+            return $this->returnError(__('errors.service.not_limited'), 409);
+        }
+
+        $unavailableDates = $service->bookings()->getUnavailableDates();
+
+        if ($unavailableDates->isEmpty()) {
+            return $this->returnError(__('errors.service.not_found_dates'), 404);
+        }
+
+        return $this->returnData(true, __('success.service.unavailable_dates'), 'unavailableDates', $unavailableDates);
     }
 }

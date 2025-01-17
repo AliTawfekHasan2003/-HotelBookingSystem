@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ServiceLimitedRequest;
 use App\Http\Resources\RoomTypeResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Contracts\Translation\TranslatorTrait;
 
@@ -58,5 +60,25 @@ class BaseServiceController extends Controller
     }
 
     return $this->returnPaginationData(true, __('success.service.room_types'), 'roomTypes',  RoomTypeResource::collection($roomTypes));
+  }
+
+  public function limitedUnits(ServiceLimitedRequest $request, $id)
+  {
+    $service = Service::find($id);
+
+    if (!$service) {
+      return $this->returnError(__('errors.service.not_found'), 404);
+    }
+
+    if (!$service->is_limited) {
+      return $this->returnError(__('errors.service.not_limited'), 409);
+    }
+
+    $startDate = Carbon::parse($request->start_date);
+    $endDate = Carbon::parse($request->end_date);
+
+    $countAvailableServiceUnits = $service->bookings()->countAvailableServiceUnits($startDate, $endDate, $service->total_units);
+
+    return $this->returnData(true, __('success.service.limited_units'), 'countAvailableServiceUnits', $countAvailableServiceUnits);
   }
 }

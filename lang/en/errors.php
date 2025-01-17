@@ -39,11 +39,14 @@ return [
         'not_found_index_trashed' =>  "No trashed rooms found.",
         'not_found_favorite' => "The favorites list does not contain any rooms.",
         'not_found' => "Room not found.",
+        'not_found_dates' => "No unavailable dates found for this room.",
+        'not_found_bookings' => "No bookings found for this room.",
         'already_favorite' => "Room has already been added to favorite.",
         'not_in_favorite' => "Room not in favorite.",
         'soft_delete' => "Unable to delete this room.",
         'restore' => "Unable to restore this room from deletion.",
         'force_delete' => "Unable to permanently delete this room.",
+        'unavailable' => "This room is not available, you can view the unavailable dates.",
     ],
 
     'service' => [
@@ -53,16 +56,36 @@ return [
         'not_found_index_trashed' =>  "No trashed services found.",
         'not_found_favorite' => "The favorites list does not contain any services.",
         'not_found' => "Service not found.",
+        'not_found_dates' => "No unavailable dates found for this service.",
         'not_found_room_types' => "No room types associated with this service were found.",
+        'not_found_bookings' => "No bookings found for this service.",
         'already_favorite' => "Service has already been added to favorite.",
         'not_in_favorite' => "Service not in favorite.",
         'soft_delete' => "Unable to delete this service.",
         'restore' => "Unable to restore this service from deletion.",
         'force_delete' => "Unable to permanently delete this service.",
+        'units' => "This service is limited and there are no units left in the sent period, you can view the available units number in this period",
+        'not_limited' => "This service is not limited.",
     ],
 
     'room_type_service' => [
         'already_assign' => "Service has already been assigned to room type.",
         'not_assign' => "This service not assign to room type.",
+    ],
+
+    'booking' => [
+        'payment_failed' => "Payment failed, Booking has been cancelled.",
+    ],
+
+    'invoice' => [
+        'not_found' => "Invoice not found.",
+        'not_pending' => "The invoice status not pending.",
+        'not_found_index_with_criteria' => "No invoices found matching the given criteria.",
+        'not_found_index_user' => "You dont have any invoice.",
+        'not_found_index' => "No invoices found.",
+    ],
+
+    'booking' => [
+        'payment_failed' => "Payment failed, Booking has been cancelled.",
     ],
 ];

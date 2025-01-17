@@ -35,6 +35,11 @@ class Room extends Model
         return $this->belongsTo(RoomType::class);
     }
 
+    public function bookings()
+    {
+        return $this->morphMany(Booking::class, 'bookingable');
+    }
+
     public function scopeNumber(Builder $query, $number)
     {
         return $query->where('number', $number);

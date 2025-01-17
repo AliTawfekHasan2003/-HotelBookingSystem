@@ -42,4 +42,10 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
+
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET'),
+        'public' => env('STRIPE_PUBLIC'),
+    ],
+
 ];

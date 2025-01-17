@@ -44,7 +44,12 @@ class Service extends Model
 
     public function roomTypes()
     {
-        return $this->belongsToMany(RoomType::class,'room_type_services');
+        return $this->belongsToMany(RoomType::class, 'room_type_services');
+    }
+
+    public function bookings()
+    {
+        return $this->MorphMany(Booking::class, 'bookingable');
     }
 
     public function scopeIsLimited(Builder $query, $isLimited)
