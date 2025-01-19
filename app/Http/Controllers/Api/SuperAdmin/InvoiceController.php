@@ -51,7 +51,7 @@ class InvoiceController extends Controller
             return $this->returnError(__('errors.invoice.not_found'), 404);
         }
 
-        $bookings = $invoice->bookings()->pagnate(10);
+        $bookings = $invoice->bookings()->paginate(10);
 
         return $this->returnData(true, __('success.invoice.bookings'), 'bookings', BookingResource::collection($bookings));
     }
