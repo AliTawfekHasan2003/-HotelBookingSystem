@@ -48,11 +48,16 @@ class Booking extends Model
         });
     }
 
+    public function scopeFilterByBookingNow(Builder $query)
+    {
+        return  $query->whereHas('invoice', function ($query) {
+            return $query->where('status', '!=', 'cancelled')->where('end_date', '>=', Carbon::now());
+        });
+    }
+
     public function scopeGetUnavailableDates(Builder $query)
     {
-        $dates = $query->whereHas('invoice', function ($query) {
-            return $query->where('status', '!=', 'cancelled')->where('end_date', '>=', Carbon::now());
-        })->with('invoice:id,start_date,end_date')->get()
+        $dates = $query->filterByBookingNow()->with('invoice:id,start_date,end_date')->get()
             ->pluck('invoice')
             ->map(function ($invoice) {
                 return [
@@ -62,6 +67,13 @@ class Booking extends Model
             });
 
         return  $dates;
+    }
+
+    public function scopeIsBooked(Builder $query)
+    {
+        $isExists = $query->filterByBookingNow()->exists();
+
+        return  $isExists;
     }
 
     public function scopeIsAvailable(Builder $query, $startDate, $endDate)
@@ -79,14 +91,7 @@ class Booking extends Model
 
         return max($countAvailableServiceUnits, 0);
     }
-    public static function addFavorite($model)
-    {
-        Favorite::create([
-            'user_id' => auth()->id(),
-            'favoriteable_id' => $model->id,
-            'favoriteable_type' => get_class($model),
-        ]);
-    }
+
     public static function addBooking($invoiceId, $monthlyPrice, $dailyPrice, $bookingCost, $model)
     {
         return

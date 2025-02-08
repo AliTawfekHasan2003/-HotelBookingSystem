@@ -5,9 +5,12 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Translation\Command\TranslationTrait;
 
 class ServiceResource extends JsonResource
 {
+    use TranslationTrait;
+    
     /**
      * Transform the resource into an array.
      *

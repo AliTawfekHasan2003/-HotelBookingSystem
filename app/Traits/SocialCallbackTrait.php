@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -15,6 +16,7 @@ trait SocialCallbackTrait
 
     public function handleSocialCallback($provider)
     {
+        DB::beginTransaction();
         try {
             $providerUser = Socialite::driver($provider)->scopes(['read:user'])->stateless()->user();
             $email = $providerUser->getEmail();
@@ -40,6 +42,8 @@ trait SocialCallbackTrait
 
                 $token = Auth::login($newUser);
 
+                DB::commit();
+
                 return $this->returnLoginRefreshSuccess(__('auth.success.social.register', ['provider' => $provider]), 'user', $newUser, $token);
             } else {
                 $socialExists = $user->socialAccounts()->where('social_id', $providerUser->getId())->exists();
@@ -57,10 +61,13 @@ trait SocialCallbackTrait
                 }
 
                 $token = Auth::login($user);
+
+                DB::commit();
             }
         } catch (\Exception $e) {
             Log::error($provider . " login error:" . $e->getMessage());
 
+            DB::rollBack();
             return $this->returnError(__('errors.unexpected_error'), 500);
         }
         return $this->returnLoginRefreshSuccess(__('auth.success.social.login', ['provider' => $provider]), 'user', $user, $token);

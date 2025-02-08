@@ -28,8 +28,8 @@ class UpdatePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => $this->passwordRule(false, false),
-            'new_password' => $this->passwordRule(true, true),
+            'current_password' => $this->passwordRule(true,false, false),
+            'new_password' => $this->passwordRule(true,true, true),
         ];
     }
 

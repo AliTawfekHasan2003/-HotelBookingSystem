@@ -17,7 +17,7 @@ trait PaginationTrait
                 'currentPageUrl' => $dataValue->url($dataValue->currentPage()),
                 'previousPageUrl' => $dataValue->previousPageUrl(),
                 'nextPageUrl' => $dataValue->nextPageUrl(),
-                'lastPageUrl' => url($dataValue->lastPage()),
+                'lastPageUrl' => url("/api/notifications?page=".$dataValue->lastPage()),
             ]
         ];
 

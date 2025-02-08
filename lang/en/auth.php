@@ -2,13 +2,13 @@
 
 return [
     'success' => [
-        'register' => "Account created, Please check your email to verify your account.",
+        'register' => "Account created  successfully, Please check your email to verify your account.",
         'login' => "Logged in successfully.",
         'refresh' => "Session refreshed successfully.",
         'logout' => "Logged out successfully.",
         'email' => [
-            'verified' => "Email verified successfully.",
-            'resend_verify' => "A verification email has been sent, Please check your email to verify your account."
+            'verified' => "Your email verified successfully.",
+            'resend_verify' => "A verification email has been sent to your email successfully, Please verify your email address to verify your account."
         ],
         'social' => [
             'register' => "A new account has been successfully created and linked with your :provider account.",
@@ -20,7 +20,7 @@ return [
         'email' => [
             'unverified' => "Please verify your email, Then log in again.",
             'unvalid_signature' => "Verification link expired, Please request a new one.",
-            'already_verified' => "Email is already verified.",
+            'already_verified' => "Your email already verified.",
             'many_attempts' => "You have exceeded the maximum number of attempts, Please wait few minutes before trying again."
         ],
         'token_expired' => "Your session has expired, Please log in again.",

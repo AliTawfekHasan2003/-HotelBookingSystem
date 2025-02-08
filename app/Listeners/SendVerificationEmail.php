@@ -25,11 +25,12 @@ class SendVerificationEmail
 
         if (!$user) {
             Log::error("Verification email could not be sent because user is missing in the event data.");
+            
             return;
         }
 
         $verificationUrl =  URL::temporarySignedRoute(
-            'verification.verify',
+            'verify.email',
             now()->addMinutes(60),
             ['id' => $user->id]
         );

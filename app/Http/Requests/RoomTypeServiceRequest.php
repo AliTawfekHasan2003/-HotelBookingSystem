@@ -6,6 +6,8 @@ use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Exists;
 
 class RoomTypeServiceRequest extends FormRequest
 {
@@ -27,8 +29,8 @@ class RoomTypeServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'room_type_id' => 'required|exists:room_types,id',
-            'service_id' =>  'required|exists:services,id',
+            'room_type_id' => ['required', Rule::exists('room_types','id')->whereNull('deleted_at')],
+            'service_id' =>  ['required',  Rule::exists('services','id')->whereNull('deleted_at')],
         ];
     }
 

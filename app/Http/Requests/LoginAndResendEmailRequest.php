@@ -8,9 +8,11 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginRequest extends FormRequest
+class LoginAndResendEmailRequest extends FormRequest
 {
     use ResponseTrait, UserValidationTrait;
+
+    public $isRequired;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +29,11 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
+        $this->isRequired = $this->routeIs('login');
+
         return [
             'email' => $this->emailRule(true, false, false),
-            'password' => $this->passwordRule(false, false),
+            'password' => $this->passwordRule($this->isRequired, false, false),
         ];
     }
 
@@ -39,6 +43,8 @@ class LoginRequest extends FormRequest
             'email.required' => __('validation.required'),
             'email.string' => __('validation.string'),
             'email.email' => __('validation.email'),
+            'email.min' => __('validation.min.string', ['min' => 11]),
+            'email.max' => __('validation.max.string', ['max' => 64]),
             'email.exists' => __('validation.exists.email'),
             'password.required' => __('validation.required'),
             'password.string' => __('validation.string'),

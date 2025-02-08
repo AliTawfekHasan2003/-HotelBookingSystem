@@ -47,6 +47,7 @@ class UpdateProfileRequest extends FormRequest
             'last_name.regex' => __('validation.regex.last_name'),
             'email.string' => __('validation.string'),
             'email.email' => __('validation.email'),
+            'email.min' => __('validation.min.string', ['max' => 11]),
             'email.max' => __('validation.max.string', ['max' => 64]),
             'email.unique' => __('validation.unique.email'),
             'email.regex' => __('validation.regex.email'),

@@ -74,6 +74,7 @@ class StoreOrUpdateRoomTypeRequest extends FormRequest
                 $messages,
             );
         }
+
         return $messages;
     }
 

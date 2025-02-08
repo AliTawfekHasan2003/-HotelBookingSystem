@@ -21,27 +21,27 @@ class Favorite extends Model
         return $this->morphTo();
     }
 
-    public static function addFavorite($model)
-    {
-        Favorite::create([
-            'user_id' => auth()->id(),
-            'favoriteable_id' => $model->id,
-            'favoriteable_type' => get_class($model),
-        ]);
-    }
-
     public function scopeByUser(Builder $query, $user_id)
     {
         return $query->where('user_id', $user_id);
     }
 
-    public static function checkInFavorite($obj)
+    public function scopeCheckIn(Builder $query)
     {
-        return self::byUser(auth()->id())->where('favoriteable_type', get_class($obj))->where('favoriteable_id', $obj->id)->exists();
+        return $query->byUser(auth()->id())->exists();
     }
 
-    public static function destroyFavorite($obj)
+    public static function addFavorite($model)
     {
-        return self::byUser(auth()->id())->where('favoriteable_type', get_class($obj))->where('favoriteable_id', $obj->id)->delete();
+        Favorite::create([
+            'user_id' => auth()->id(),
+            'favoriteable_type' => $model['type'],
+            'favoriteable_id' => $model['id'],
+        ]);
+    }
+
+    public static function destroyFavorite($model)
+    {
+        return self::byUser(auth()->id())->where('favoriteable_type', $model['type'])->where('favoriteable_id', $model['id'])->delete();
     }
 }

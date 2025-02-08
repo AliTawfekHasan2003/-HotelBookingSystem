@@ -5,45 +5,26 @@ use App\Http\Controllers\Api\User\InvoiceController;
 use App\Http\Controllers\Api\User\RoomController;
 use App\Http\Controllers\Api\User\RoomTypeController;
 use App\Http\Controllers\Api\User\ServiceController;
-use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['lang', 'auth', 'role.user'])->prefix('user')->group(function () {
-    Route::controller(UserController::class)->group(function () {
-        Route::get('profile', 'showProfile');
-        Route::patch('profile', 'updateProfile');
-        Route::post('password', 'setPassword');
-        Route::patch('password', 'updatePassword');
-    });
-
     Route::controller(RoomTypeController::class)->prefix('room_types')->group(function () {
-        Route::get('', 'index');
         Route::get('/favorite', 'getFavorite');
-        Route::get('/{id}', 'show');
-        Route::post('/{id}/favorite', 'markAsFavorite');
-        Route::delete('/{id}/favorite', 'unmarkAsFavorite');
-        Route::get('/{id}/rooms', 'rooms');
-        Route::get('/{id}/services', 'services');
+        Route::post('/{id}/favorite/mark_as_favorite', 'markAsFavorite');
+        Route::delete('/{id}/favorite/unmark_as_favorite', 'unmarkAsFavorite');
     });
 
     Route::controller(RoomController::class)->prefix('rooms')->group(function () {
-        Route::get('', 'index');
         Route::get('/favorite', 'getFavorite');
-        Route::get('/{id}', 'show');
-        Route::post('/{id}/favorite', 'markAsFavorite');
-        Route::delete('/{id}/favorite', 'unmarkAsFavorite');
-        Route::get('/{id}/unavailable_dates', 'unavailableDates');
+        Route::post('/{id}/favorite/mark_as_favorite', 'markAsFavorite');
+        Route::delete('/{id}/favorite/unmark_as_favorite', 'unmarkAsFavorite');
     });
 
     Route::controller(ServiceController::class)->prefix('services')->group(function () {
-        Route::get('', 'index');
         Route::get('/favorite', 'getFavorite');
-        Route::get('/{id}', 'show');
-        Route::post('/{id}/favorite', 'markAsFavorite');
-        Route::delete('/{id}/favorite', 'unmarkAsFavorite');
-        Route::get('/{id}/room_types', 'roomTypes');
-        Route::get('/{id}/available_units', 'limitedUnits');
+        Route::post('/{id}/favorite/mark_as_favorite', 'markAsFavorite');
+        Route::delete('/{id}/favorite/unmark_as_favorite', 'unmarkAsFavorite');
     });
 
     Route::controller(BookingController::class)->prefix('bookings')->group(function () {

@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Room;
+use Illuminate\Validation\Rule;
 
 trait RoomValidationTrait
 {
@@ -10,7 +11,7 @@ trait RoomValidationTrait
     {
         $required = $isRequired ? ['required'] : ['nullable'];
 
-        return array_merge($required, ['integer', 'exists:room_types,id']);
+        return array_merge($required, ['integer', Rule::exists('room_types', 'id')->whereNull('deleted_at')]);
     }
 
     public function floorAndNumberRule($isRequired)

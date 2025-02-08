@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminRoleMiddleware
+class DashboardMiddleware
 {
     use ResponseTrait;
 
@@ -20,8 +20,8 @@ class AdminRoleMiddleware
     {
         $user = $request->attributes->get('user');
 
-        if ($user->role != 'admin') {
-            return $this->returnError(__('roles.admin_role'), 403);
+        if ($user->role === 'user') {
+            return $this->returnError(__('roles.dashboard'), 403);
         }
 
         return $next($request);

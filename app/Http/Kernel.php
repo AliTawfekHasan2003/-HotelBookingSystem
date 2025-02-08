@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -54,8 +55,9 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\CustomAuthJwtMiddleWare::class,
+        'checkRole' => \App\Http\Middleware\RoleMiddleware::class,
         'role.user' => \App\Http\Middleware\UserRoleMiddleware::class,
-        'role.admin' => \App\Http\Middleware\AdminRoleMiddleware::class,
+        'dashboard' => \App\Http\Middleware\DashboardMiddleware::class,
         'role.super_admin' => \App\Http\Middleware\SuperAdminRoleMiddleware::class,
         'lang' => \App\Http\Middleware\SetLocaleMiddleWare::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

@@ -54,12 +54,12 @@ class Service extends Model
 
     public function scopeIsLimited(Builder $query, $isLimited)
     {
-        return $query->where('is_limited', $isLimited);
+        return $query->where('is_limited', (int) $isLimited);
     }
 
     public function scopeIsFree(Builder $query, $isFree)
     {
-        return $query->where('is_free', $isFree);
+        return $query->where('is_free', (int) $isFree);
     }
 
     public function scopeName(Builder $query, $name)
@@ -74,8 +74,7 @@ class Service extends Model
 
     public static function filterServices(Request $request, $trashed = false)
     {
-        $query = self::query();
-        $query = $trashed ? $query->onlyTrashed()->with('translations') : $query->with('translations');
+        $query = $trashed ? self::query()->onlyTrashed() : self::query();
 
         $ifCriteria = false;
 

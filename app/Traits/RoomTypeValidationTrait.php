@@ -24,7 +24,7 @@ trait RoomTypeValidationTrait
         return [
             'capacity.integer' => __('validation.integer'),
             'capacity.min' => __('validation.min.capacity', ['min' => 1]),
-            'capacity.max' => __('validation.max.capacity', ['max' => 5]),
+            'capacity.max' => __('validation.max.capacity', ['max' => 10]),
         ];
     }
 
@@ -32,8 +32,8 @@ trait RoomTypeValidationTrait
     {
         return [
             'daily_price.decimal' => __('validation.decimal', ['number' => 2]),
-            'daily_price.min' => __('validation.min.price', ['min' => '1$']),
-            'daily_price.max' => __('validation.max.price', ['max' => '999999$']),
+            'daily_price.min' => __('validation.min.price', ['min' => '1.00$']),
+            'daily_price.max' => __('validation.max.price', ['max' => '999999.99$']),
         ];
     }
 
@@ -41,8 +41,8 @@ trait RoomTypeValidationTrait
     {
         return [
             'monthly_price.decimal' => __('validation.decimal', ['number' => 2]),
-            'monthly_price.min' => __('validation.min.price', ['min' => '1$']),
-            'monthly_price.max' => __('validation.max.price', ['max' => '999999$']),
+            'monthly_price.min' => __('validation.min.price', ['min' => '1.00$']),
+            'monthly_price.max' => __('validation.max.price', ['max' => '999999.99$']),
         ];
     }
 

@@ -2,12 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\TranslationTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
 class RoomResource extends JsonResource
 {
+    use TranslationTrait;
+    
     /**
      * Transform the resource into an array.
      *

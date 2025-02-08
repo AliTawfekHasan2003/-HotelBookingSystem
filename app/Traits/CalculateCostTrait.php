@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 
-trait CalculateTotalCostTrait
+trait CalculateCostTrait
 {
     use ResponseTrait;
 

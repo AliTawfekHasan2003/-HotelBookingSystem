@@ -25,17 +25,6 @@ class Translation extends Model
         return $this->morphTo();
     }
 
-    public static function addTranslation($model, $attribute, $value, $language)
-    {
-        self::create([
-            'translatable_id' => $model->id,
-            'translatable_type' => get_class($model),
-            'attribute' => $attribute,
-            'value' => $value,
-            'language' => $language,
-        ]);
-    }
-
     public function updateTranslation($value)
     {
         $this->update([

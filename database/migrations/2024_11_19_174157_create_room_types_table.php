@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('capacity');
             $table->decimal('daily_price', 8, 2);
             $table->decimal('monthly_price', 8, 2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

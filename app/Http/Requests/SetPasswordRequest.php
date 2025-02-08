@@ -28,7 +28,7 @@ class SetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password' => $this->passwordRule(true, true),
+            'password' => $this->passwordRule(true,true, true),
         ];
     }
 

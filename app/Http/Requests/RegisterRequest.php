@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
             'first_name' => $this->nameRule(true),
             'last_name' => $this->nameRule(true),
             'email' => $this->emailRule(true, true, true),
-            'password' => $this->passwordRule(true, true),
+            'password' => $this->passwordRule(true, true, true),
         ];
     }
 
@@ -51,6 +51,7 @@ class RegisterRequest extends FormRequest
             'email.required' => __('validation.required'),
             'email.string' => __('validation.string'),
             'email.email' => __('validation.email'),
+            'email.min' => __('validation.min.string', ['min' => 11]),
             'email.max' => __('validation.max.string', ['max' => 64]),
             'email.unique' => __('validation.unique.email'),
             'email.regex' => __('validation.regex.email'),

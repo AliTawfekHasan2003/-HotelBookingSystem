@@ -86,6 +86,7 @@ return [
             /*
              * Absolute path to directory where to export views
              */
+            
             'views' => base_path('resources/views/vendor/l5-swagger'),
 
             /*

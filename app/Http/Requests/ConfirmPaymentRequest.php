@@ -28,7 +28,7 @@ class ConfirmPaymentRequest extends FormRequest
     {
         return [
             'payment_id' => 'required|string|regex:/^pi_[a-zA-Z0-9_]+$/|min:10',
-            'payment_status' => 'required|in:succeeded,failed',
+            'payment_status' => 'required|string|in:succeeded,failed',
         ];
     }
 
@@ -40,6 +40,7 @@ class ConfirmPaymentRequest extends FormRequest
             'payment_id.regex' => __('validation.regex.payment_id'),
             'payment_id.min' => __('validation.min.string', ['min' => 10]),
             'payment_status.required' => __('validation.required'),
+            'payment_status.string' => __('validation.string'),
             'payment_status.in' => __('validation.in.payment_status'),
         ];
     }

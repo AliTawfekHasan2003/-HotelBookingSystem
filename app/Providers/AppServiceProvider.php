@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::morphMap([
+            'roomType' => 'App\Models\RoomType',
             'room' => 'App\Models\Room',
             'service' => 'App\Models\Service',
         ]);

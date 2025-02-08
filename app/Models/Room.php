@@ -57,8 +57,7 @@ class Room extends Model
 
     public static function filterRooms(Request $request, $trashed = false)
     {
-        $query = self::query();
-        $query = $trashed ? $query->onlyTrashed()->with('translations') : $query->with('translations');
+        $query = $trashed ? self::query()->onlyTrashed() : self::query();
 
         $ifCriteria = false;
 
